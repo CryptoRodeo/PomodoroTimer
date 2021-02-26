@@ -1,0 +1,43 @@
+:host {
+  width: 70%;
+}
+
+nav#taskBar
+{
+  display:flex;
+  border-radius: 20px;
+  height: 100px;
+  flex-direction: row;
+  justify-content: space-around;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
+  background-color: #39C0ED;
+}
+
+nav#taskBar button.taskBtn {
+  color: #FBFBFB;
+  width: 33%;
+  border-radius: 20px;
+  border: none;
+  background-color: transparent;
+  font-size: 2rem;
+}
+
+nav#taskBar button.taskBtn:nth-child(1) {
+  border-bottom-right-radius:0;
+  border-top-right-radius:0;
+}
+
+nav#taskBar button.taskBtn:nth-child(2) {
+  border-radius: 0;
+}
+
+nav#taskBar button.taskBtn:nth-child(3) {
+  border-bottom-left-radius:0;
+  border-top-left-radius:0;
+}
+
+nav#taskBar button.taskBtn:hover {
+  background-color: #00B0FF;
+  cursor: pointer;
+  transition: linear .2s;
+}
