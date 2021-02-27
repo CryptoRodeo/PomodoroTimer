@@ -4,11 +4,23 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class TimerService {
-  pomodoroTime = 1800; //Default time is 30 minutes
-  intervalID = 0;
+  private pomodoroTime = this.convertToSeconds(30); //Default time is 30 minutes
+  private timeSet = 30;
+  private intervalID = null;
 
 
   constructor() { 
+  }
+
+
+  private convertToSeconds(minutes: number): number {
+    return (minutes * 60);
+  }
+
+  setTime(minutes: number)
+  {
+    this.timeSet = minutes;
+    this.pomodoroTime = this.convertToSeconds(this.timeSet);
   }
 
   formatTime(timeInS: number): string {
@@ -23,6 +35,7 @@ export class TimerService {
 
   startTimer()
   {
+    clearInterval(this.intervalID);
     // Call this.countDown, bind the call to this service using arrow operator.
     this.intervalID = window.setInterval(() => this.countDown(), 1000);
   }
@@ -45,7 +58,7 @@ export class TimerService {
   resetTimer()
   {
     clearInterval(this.intervalID);
-    this.pomodoroTime = 1800;
+    this.pomodoroTime = this.convertToSeconds(this.timeSet);
   }
 
 }
