@@ -42,4 +42,10 @@ export class TimerService {
     clearInterval(this.intervalID);
   }
 
+  resetTimer()
+  {
+    clearInterval(this.intervalID);
+    this.pomodoroTime = 1800;
+  }
+
 }

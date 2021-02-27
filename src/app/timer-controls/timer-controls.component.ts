@@ -21,4 +21,9 @@ export class TimerControlsComponent implements OnInit {
     this.timerService.stopTimer();
   }
 
+  resetTimer()
+  {
+    this.timerService.resetTimer();
+  }
+
 }
