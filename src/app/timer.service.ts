@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class TimerService {
   private pomodoroTime = this.convertToSeconds(30); //Default time is 30 minutes
   private timeSet = 30;
+  private timerStarted = false;
   private intervalID = null;
 
 
@@ -35,6 +36,8 @@ export class TimerService {
 
   startTimer()
   {
+    if (this.timerStarted ) { return; }
+    this.timerStarted = true;
     clearInterval(this.intervalID);
     // Call this.countDown, bind the call to this service using arrow operator.
     this.intervalID = window.setInterval(() => this.countDown(), 1000);
@@ -53,12 +56,14 @@ export class TimerService {
   stopTimer()
   {
     clearInterval(this.intervalID);
+    this.timerStarted = false;
   }
 
   resetTimer()
   {
     clearInterval(this.intervalID);
     this.pomodoroTime = this.convertToSeconds(this.timeSet);
+    this.timerStarted = false;
   }
 
 }
