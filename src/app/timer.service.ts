@@ -50,7 +50,11 @@ export class TimerService {
 
   countDown(): void 
   {
-    this.pomodoroTime--;
+    if (this.pomodoroTime > 0) {
+      this.pomodoroTime--;
+      return;
+    }
+    this.resetTimer();
   }
 
   stopTimer()
