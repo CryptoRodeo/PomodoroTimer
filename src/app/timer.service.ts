@@ -7,8 +7,8 @@ export class TimerService {
   private pomodoroTime = this.convertToSeconds(30); //Default time is 30 minutes
   private timeSet = 30;
   private timerStarted = false;
-  private intervalID = null;
-
+  private title = document.querySelector('title');
+  private timerIntervalID = null;
 
   constructor() { 
   }
@@ -38,14 +38,20 @@ export class TimerService {
   {
     if (this.timerStarted ) { return; }
     this.timerStarted = true;
-    clearInterval(this.intervalID);
-    // Call this.countDown, bind the call to this service using arrow operator.
-    this.intervalID = window.setInterval(() => this.countDown(), 1000);
+    this.clearIntervalIDs()
+    this.updateTitle();
+    // Call this.countDown && this.updateTile(), bind the call to this service using arrow operator.
+    // Will probably move the title updating to a component or service soon.
+    this.timerIntervalID = window.setInterval(() => { this.countDown(); this.updateTitle(); }, 1000);
   }
 
   getTime(): string
   {
     return this.formatTime(this.pomodoroTime);
+  }
+
+  updateTitle(): void {
+    this.title.innerHTML = `( ${this.getTime()} ) TomatoTimer`;
   }
 
   countDown(): void 
@@ -59,15 +65,20 @@ export class TimerService {
 
   stopTimer()
   {
-    clearInterval(this.intervalID);
+    this.clearIntervalIDs()
     this.timerStarted = false;
   }
 
   resetTimer()
   {
-    clearInterval(this.intervalID);
+    this.clearIntervalIDs()
     this.pomodoroTime = this.convertToSeconds(this.timeSet);
+    this.updateTitle();
     this.timerStarted = false;
+  }
+
+  clearIntervalIDs() {
+    clearInterval(this.timerIntervalID);
   }
 
 }
