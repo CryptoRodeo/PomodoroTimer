@@ -51,7 +51,7 @@ export class TimerService {
   }
 
   updateTitle(): void {
-    this.title.innerHTML = `( ${this.getTime()} ) TomatoTimer`;
+    this.title.innerHTML = `( ${this.getTime()} )`;
   }
 
   countDown(): void 
