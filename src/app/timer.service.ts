@@ -18,10 +18,32 @@ export class TimerService {
     return (minutes * 60);
   }
 
+  setPomodoro() {
+    this.clearIntervalIDs();
+    this.setTime(30);
+    this.updateTitle();
+  }
+
+  setShortBreak() {
+    this.clearIntervalIDs();
+    this.setTime(5);
+    this.updateTitle();
+  }
+
+  setLongBreak() {
+    this.clearIntervalIDs();
+    this.setTime(10);
+    this.updateTitle();
+  }
+
   setTime(minutes: number)
   {
     this.timeSet = minutes;
     this.pomodoroTime = this.convertToSeconds(this.timeSet);
+  }
+
+  timerRunning(): boolean {
+    return this.timerStarted;
   }
 
   formatTime(timeInS: number): string {
