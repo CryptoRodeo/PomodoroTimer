@@ -1,0 +1,29 @@
+:host {
+    width: 70%;
+    margin-top: 3rem;
+    height: 10rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+div.info-box {
+    width: 25%;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 2rem;
+    background-color: #EEEEEE;
+}
+
+h3.info-box-header {
+    margin-bottom: .33rem;
+}
+
+ul#shortcut-list strong{
+    color: #212121;
+    font-weight: bold;
+    margin-right: 4px;
+}
