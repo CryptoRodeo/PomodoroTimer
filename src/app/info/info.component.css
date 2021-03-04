@@ -10,20 +10,41 @@
 div.info-box {
     width: 25%;
     border-radius: 20px;
-    display: flex;
+    /* display: flex;
+    position: relative;
     flex-direction: column;
     justify-content: space-around;
-    align-items: center;
-    padding: 2rem;
+    align-items: center; */
+    font-size: .875rem;
+    padding: 0 1rem;
     background-color: #EEEEEE;
+    position: relative;
+    min-width: 1px;
 }
 
 h3.info-box-header {
     margin-bottom: .33rem;
 }
 
+ul#shortcut-list {
+    margin-left: 1rem;
+    list-style-position: outside;
+    line-height: 1.6;
+}
 ul#shortcut-list strong{
     color: #212121;
-    font-weight: bold;
-    margin-right: 4px;
+}
+
+div.info-box-container
+{
+    padding: 1.4rem;
+    margin-bottom: 1.4rem;
+}
+
+button#alert-permission-button {
+    border: none;
+    background-color: #39c0ED;
+    color: #FBFBFB;
+    padding: .8rem;
+    border-radius: 1.4rem;
 }

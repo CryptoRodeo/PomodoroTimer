@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class TimerService {
   private title = document.querySelector('title');
   private timerIntervalID = null;
 
-  constructor() { 
+  constructor(private notificationService: NotificationService) { 
   }
 
 
@@ -97,6 +98,7 @@ export class TimerService {
     this.pomodoroTime = this.convertToSeconds(this.timeSet);
     this.updateTitle();
     this.timerStarted = false;
+    this.notificationService.playBeep();
   }
 
   clearIntervalIDs() {
