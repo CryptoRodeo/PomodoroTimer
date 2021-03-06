@@ -7,50 +7,59 @@ export class NotificationService {
 
   private audioFiles = {
     beep: '../assets/audio/alarm_beeps.mp3'
+  };
+
+  constructor() {
+
   }
 
-  constructor() { 
-  
-  }
-
-  askNotificationPermission() {
+  askNotificationPermission(): void {
     if (!window.Notification) {
       alert('This browser does not support desktop notifications.');
-      return
+      return;
     }
 
     if (Notification.permission === 'granted') {
-      let notify = new Notification('Hello!', {
-        body: 'How are you doing?'
-      });
+      this.showPermissionNotification();
     }
+
     else
     {
       // request permission from user
       Notification.requestPermission().then((p) => {
         if (p === 'granted') {
-          console.log('permission granted');
           // show notification here
-          var notify = new Notification('Hi there!', {
-              body: 'How are you doing?'
-          });
+          this.showPermissionNotification();
 
         } else {
             console.log('User blocked notifications.');
         }
-      }).catch(function (err) {
+      }).catch((err) => {
           console.error(err);
       });
     }
   }
 
-  playBeep() {
-    let beep = new Audio(this.audioFiles.beep);
+  showPermissionNotification(): void {
+    const notify = new Notification('Desktop Notifications', {
+      body: 'enabled'
+    });
+  }
+
+  createNotification(header = '', notifBody = '' ): void {
+    const notification = new Notification(header, {
+      body: notifBody
+    });
+  }
+
+  playBeep(): void {
+    const ctx = new AudioContext();
+    const beep = new Audio(this.audioFiles.beep);
     beep.play();
     this.limitAudioDuration(beep);
   }
 
-  limitAudioDuration(audio) {
+  limitAudioDuration(audio): void {
     audio.addEventListener('timeupdate', () => {
       if (audio.currentTime >= 4.5) {
         audio.pause();

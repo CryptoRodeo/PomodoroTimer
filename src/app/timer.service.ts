@@ -5,39 +5,50 @@ import { NotificationService } from './notification.service';
   providedIn: 'root'
 })
 export class TimerService {
-  private pomodoroTime = this.convertToSeconds(30); //Default time is 30 minutes
-  private timeSet = 30;
+
+  private timePeriods = {
+    pomodoro: 30,
+    shortBreak: 5,
+    longBreak: 10
+  };
+
+  private pomodoroTime = this.convertToSeconds(30); // Default time is 30 minutes
+  private timeSet = this.timePeriods.pomodoro;
   private timerStarted = false;
   private title = document.querySelector('title');
   private timerIntervalID = null;
+  private isPomodoro = false;
+  private isBreak = false;
 
-  constructor(private notificationService: NotificationService) { 
+
+
+  constructor(private notificationService: NotificationService) {
+
   }
-
 
   private convertToSeconds(minutes: number): number {
     return (minutes * 60);
   }
 
-  setPomodoro() {
+  setPomodoro(): void {
     this.clearIntervalIDs();
-    this.setTime(30);
+    this.setTime(this.timePeriods.pomodoro);
     this.updateTitle();
   }
 
-  setShortBreak() {
+  setShortBreak(): void {
     this.clearIntervalIDs();
-    this.setTime(5);
+    this.setTime(this.timePeriods.shortBreak);
     this.updateTitle();
   }
 
-  setLongBreak() {
+  setLongBreak(): void {
     this.clearIntervalIDs();
-    this.setTime(10);
+    this.setTime(this.timePeriods.longBreak);
     this.updateTitle();
   }
 
-  setTime(minutes: number)
+  setTime(minutes: number): void
   {
     this.timeSet = minutes;
     this.pomodoroTime = this.convertToSeconds(this.timeSet);
@@ -48,16 +59,16 @@ export class TimerService {
   }
 
   formatTime(timeInS: number): string {
-    let time = new Date(timeInS * 1000);
+    const time = new Date(timeInS * 1000);
     /**
      * Get minutes and seconds, add padding.
      */
-    let minutes = time.getUTCMinutes().toString().padStart(2,'0');
-    let seconds = time.getSeconds().toString().padStart(2,'0');
+    const minutes = time.getUTCMinutes().toString().padStart(2,'0');
+    const seconds = time.getSeconds().toString().padStart(2,'0');
     return `${minutes} : ${seconds}`;
   }
 
-  startTimer()
+  startTimer(): void
   {
     if (this.timerStarted ) { return; }
     this.timerStarted = true;
@@ -77,31 +88,46 @@ export class TimerService {
     this.title.innerHTML = `( ${this.getTime()} )`;
   }
 
-  countDown(): void 
+  countDown(): void
   {
     if (this.pomodoroTime > 0) {
       this.pomodoroTime--;
       return;
     }
+    this.notifyUser();
     this.resetTimer();
   }
 
-  stopTimer()
+  stopTimer(): void
   {
     this.clearIntervalIDs()
     this.timerStarted = false;
   }
 
-  resetTimer()
+  formatNotification(): { header , body } {
+    if ( this.timeSet === this.timePeriods.shortBreak || this.timeSet === this.timePeriods.longBreak)
+    {
+      return { header: 'Break over', body: '' };
+    }
+    return { header: 'Pomodoro over', body: 'Take a break!' };
+  }
+
+  resetTimer(): void
   {
     this.clearIntervalIDs()
     this.pomodoroTime = this.convertToSeconds(this.timeSet);
     this.updateTitle();
     this.timerStarted = false;
-    this.notificationService.playBeep();
   }
 
-  clearIntervalIDs() {
+  notifyUser(): void {
+    this.notificationService.playBeep();
+    const notificationObj = this.formatNotification();
+    const { header, body } = notificationObj;
+    this.notificationService.createNotification( header, body );
+  }
+
+  clearIntervalIDs(): void {
     clearInterval(this.timerIntervalID);
   }
 

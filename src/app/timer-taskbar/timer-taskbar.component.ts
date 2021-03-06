@@ -19,22 +19,20 @@ export class TimerTaskbarComponent implements OnInit {
   }
 
   startPomodoro() {
-//    this.notificationService.playBeep();
-    this.notificationService.askNotificationPermission();
     this.timerService.stopTimer();
-    this.timerService.setTime(30);
+    this.timerService.setPomodoro();
     this.startTimer();
   }
 
   shortBreak() {
     this.timerService.stopTimer();
-    this.timerService.setTime(5);
+    this.timerService.setShortBreak();
     this.startTimer();
   }
 
   longBreak() {
     this.timerService.stopTimer();
-    this.timerService.setTime(10);
+    this.timerService.setLongBreak();
     this.startTimer();
   }
 

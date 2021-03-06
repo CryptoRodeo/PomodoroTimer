@@ -16,39 +16,33 @@ export enum KEY {
 })
 export class AppComponent {
 
+  title = 'pomodoro-timer';
+
   constructor(private timerService: TimerService) {}
 
-  @HostListener('window:keydown', ['$event'])
-  keyEvent(event: KeyboardEvent) {
-    console.log(event);
-
-
-  }
-
-  @HostListener('window:keydown', ['$event']) onKeyDown(e) {
-    if (e.key == KEY.SPACE) {
+  @HostListener('window:keydown', ['$event']) onKeyDown(e): void {
+    if (e.key === KEY.SPACE) {
       this.toggleTimer();
     }
 
-    else if (e.altKey && e.keyCode == KEY.P) {
+    else if (e.altKey && e.keyCode === KEY.P) {
       this.timerService.setPomodoro();
     }
 
-    else if (e.altKey && e.keyCode == KEY.S) {
+    else if (e.altKey && e.keyCode === KEY.S) {
       this.timerService.setShortBreak();
     }
 
-    else if (e.altKey && e.keyCode == KEY.L) {
+    else if (e.altKey && e.keyCode === KEY.L) {
       this.timerService.setLongBreak();
     }
 
-    else if (e.altKey && e.keyCode == KEY.R) {
+    else if (e.altKey && e.keyCode === KEY.R) {
       this.timerService.resetTimer();
     }
   }
-  title = 'pomodoro-timer';
 
-  toggleTimer() {
+  toggleTimer(): void {
     if(this.timerService.timerRunning()) {
       this.timerService.stopTimer();
     }
