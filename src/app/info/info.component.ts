@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { NotificationService } from '../notification.service';
 @Component({
   selector: 'app-info',
   templateUrl: './info.component.html',
@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InfoComponent implements OnInit {
 
-  constructor() { }
+  constructor(private notificationService: NotificationService) { }
 
   ngOnInit(): void {
+  }
+
+  enableDesktopNotifications() {
+    this.notificationService.askNotificationPermission();
   }
 
 }

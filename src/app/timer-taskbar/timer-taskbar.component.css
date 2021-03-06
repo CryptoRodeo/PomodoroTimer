@@ -1,5 +1,9 @@
 :host {
-  width: 70%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 nav#taskBar
@@ -7,6 +11,9 @@ nav#taskBar
   display:flex;
   border-radius: 20px;
   height: 100px;
+  max-width: 69.125rem;
+  width: 69.125rem;
+  min-width: 60rem;
   flex-direction: row;
   justify-content: space-around;
   box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
@@ -15,7 +22,9 @@ nav#taskBar
 
 nav#taskBar button.taskBtn {
   color: #FBFBFB;
-  width: 33%;
+  max-width: 33%;
+  width: 23.04rem;
+  min-width: 23;
   border-radius: 20px;
   border: none;
   background-color: transparent;
