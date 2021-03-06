@@ -1,0 +1,60 @@
+:host {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 100%;
+    margin-top: 3rem;
+}
+
+div#info-container {
+    width: 58.75rem;
+    min-width: 48.74rem;
+    max-width: 100%;
+    height: calc(10rem + 3rem);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 0 auto;
+}
+
+div.info-box {
+    width: 33.33%;
+    border-radius: 20px;
+    font-size: .875rem;
+    padding: 0 1rem;
+    position: relative;
+    min-width: 1px;
+}
+
+h3.info-box-header {
+    margin-bottom: .33rem;
+}
+
+ul#shortcut-list {
+    margin-left: 1rem;
+    list-style-position: outside;
+    line-height: 1.6;
+}
+ul#shortcut-list strong{
+    color: #212121;
+}
+
+div.info-box-container
+{
+    background-color: #EEEEEE;
+    padding: 1.4rem;
+    margin-bottom: 1.4rem;
+}
+
+button#alert-permission-button {
+    border: none;
+    background-color: #39c0ED;
+    color: #FBFBFB;
+    height: 2rem;
+    padding: .4rem;
+    margin-top: 1rem;
+    border-radius: 10px;
+}
+
+button#alert-permission-button:hover {
+   cursor: pointer; 
+}

@@ -14,7 +14,8 @@ header
 
 button#settingsBtn
 {
-  width: 15%;
+  width: 14.375rem;
+  min-width: 12rem;
   height: 55px;
   border-radius: 50px;
   font-size: 1.5rem;

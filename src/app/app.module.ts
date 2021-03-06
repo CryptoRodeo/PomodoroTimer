@@ -5,13 +5,15 @@ import { AppComponent } from './app.component';
 import { TimerTaskbarComponent } from './timer-taskbar/timer-taskbar.component';
 import { TimerDisplayComponent } from './timer-display/timer-display.component';
 import { TimerControlsComponent } from './timer-controls/timer-controls.component';
+import { InfoComponent } from './info/info.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TimerTaskbarComponent,
     TimerDisplayComponent,
-    TimerControlsComponent
+    TimerControlsComponent,
+    InfoComponent
   ],
   imports: [
     BrowserModule
