@@ -1,8 +1,10 @@
 <main id="container">
   <header>
     <h1>TomatoTimer</h1>
-    <button id="settingsBtn">Settings</button>
+    <button 
+      (click)="openModal('settings-modal')" id="settingsBtn">Settings</button>
   </header>
+  <app-settings-page id="settings-modal"></app-settings-page>
   <timer-taskbar></timer-taskbar>
   <timer-display></timer-display>
   <timer-controls></timer-controls>
