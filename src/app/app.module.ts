@@ -6,6 +6,7 @@ import { TimerTaskbarComponent } from './timer-taskbar/timer-taskbar.component';
 import { TimerDisplayComponent } from './timer-display/timer-display.component';
 import { TimerControlsComponent } from './timer-controls/timer-controls.component';
 import { InfoComponent } from './info/info.component';
+import { SettingsPageComponent } from './settings-page/settings-page.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { InfoComponent } from './info/info.component';
     TimerTaskbarComponent,
     TimerDisplayComponent,
     TimerControlsComponent,
-    InfoComponent
+    InfoComponent,
+    SettingsPageComponent
   ],
   imports: [
     BrowserModule
