@@ -53,7 +53,6 @@ export class AppComponent {
   }
 
   openModal(id: string) {
-    console.log(id);
     this.modalService.open(id);
   }
 

@@ -1,5 +1,9 @@
-div.settings-page {
+/* css stylings to default component display to none */
+#settings-modal {
     display: none;
+}
+
+div.settings-container{
     position: fixed;
     top: 0;
     bottom: 0;

@@ -9,6 +9,7 @@ import { ModalService } from '../modal.service';
 export class SettingsPageComponent implements OnInit, OnDestroy {
   @Input() id: string;
   private element: any;
+
   constructor(private modalService: ModalService, private el: ElementRef) {
     this.element = el.nativeElement;
   }
@@ -19,6 +20,8 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
       return;
     }
 
+    // Set the default display value to none
+    this.element.style.display = 'none';
 
     //Move element to the bottom of the page (before </body>) so it can
     // be displayed above everything else.
@@ -26,13 +29,15 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
     document.body.appendChild(this.element);
 
     this.element.addEventListener('click', el => {
-      if (el.target.className === 'app-settings-page') {
+      if (el.target.className === 'settings-container') {
         this.close();
       }
     });
 
     // add this modal instance to the modal service so its accessible from controllers
     this.modalService.add(this);
+
+//    this.element.style.display = 'none';
   }
 
   ngOnDestroy(): void {
@@ -41,12 +46,12 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
   }
 
   open(): void {
-    this.element.style.display == 'block';
+    this.element.style.display = 'block';
     document.body.classList.add('settings-page-open');
   }
 
   close(): void {
-    this.element.style.display == 'none';
+    this.element.style.display = 'none';
     document.body.classList.remove('settings-page-open');
   }
 
