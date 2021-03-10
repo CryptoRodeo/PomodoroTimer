@@ -65,3 +65,8 @@ button.controlBtn:nth-child(3):hover
 {
   background-color: #FFA900;
 }
+
+button.controlBtn:focus {
+  outline-style:dotted;
+  border-radius: 20px;
+}
