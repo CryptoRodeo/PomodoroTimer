@@ -14,12 +14,40 @@
         </div>
         <div id="sound-container">
             <h4>Select Sound</h4>
+            <select id="alertOption" size="5">
+                <option value="beep">Beep</option>
+                <option value="beep">Test</option>
+                <option value="beep">Test</option>
+                <option value="beep">Test</option>
+                <option value="beep">Test</option>
+            </select>
         </div>
              <div id="sound-container">
             <h4>Select Volume</h4>
+            <select id="volumeOption" size="5">
+                <option value="mute">mute</option>
+                <option value="twentyFivePercent">25%</option>
+                <option value="fiftyPercent">50%</option>
+                <option value="seventyFivePercent">75%</option>
+                <option value="fullVolume">100%</option>
+            </select>
         </div>
              <div id="sound-container">
             <h4>Set Custom Times (in minutes)</h4>
+            <div class="timerSettings">
+                <label for="pomodroTimerSettings">Pomodoro</label>
+                <input id="pomodoroTimerSettings" type="number" step="1" min="1">
+            </div>
+
+            <div class="timerSettings">
+                <label for="shortBreakSettings">Short Break</label>
+                <input id="shortBreakSettings" type="number" step="1" min="1">
+            </div>
+
+            <div class="timerSettings">
+                <label for="longBreakSettings">Long Break</label>
+                <input id="longBreakSettings" type="number" step="1" min="1">
+            </div>
         </div>
              <div id="sound-container">
             <button>Save</button>
