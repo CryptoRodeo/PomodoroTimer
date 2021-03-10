@@ -1,6 +1,7 @@
 import { KeyValuePipe } from '@angular/common';
 import { Component, HostListener } from '@angular/core';
 import { TimerService } from './timer.service';
+import { ModalService } from './modal.service';
 export enum KEY {
   SPACE = ' ',
   ALT = 'Alt',
@@ -18,7 +19,7 @@ export class AppComponent {
 
   title = 'pomodoro-timer';
 
-  constructor(private timerService: TimerService) {}
+  constructor(private timerService: TimerService, private modalService: ModalService) {}
 
   @HostListener('window:keydown', ['$event']) onKeyDown(e): void {
     if (e.key === KEY.SPACE) {
@@ -49,5 +50,13 @@ export class AppComponent {
     else {
       this.timerService.startTimer();
     }
+  }
+
+  openModal(id: string) {
+    this.modalService.open(id);
+  }
+
+  closeModal(id: string) {
+    this.modalService.close(id);
   }
 }

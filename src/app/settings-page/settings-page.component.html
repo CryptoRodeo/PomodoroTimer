@@ -1,0 +1,58 @@
+<div class="settings-container">
+    <div id="settings-option-container">
+        <h1>Options</h1>
+        <div id="preferences-container">
+            <h4>User Preferences</h4>
+            <input id="timerIndicatorOption" type="checkbox">
+            <label for="timerIndicatorOption">Timer indication in browser tab?</label>
+
+            <input id="browserNotificationOption" type="checkbox">
+            <label for="browserNotificationOption">Browser notifications?</label>
+
+            <input id="autoStartTimersOption" type="checkbox">
+            <label for="autoStartTimersOption">Auto start pomodoros and breaks?</label>
+        </div>
+        <div id="sound-container">
+            <h4>Select Sound</h4>
+            <select id="alertOption" size="5">
+                <option value="beep">Beep</option>
+                <option value="beep">Test</option>
+                <option value="beep">Test</option>
+                <option value="beep">Test</option>
+                <option value="beep">Test</option>
+            </select>
+        </div>
+             <div id="sound-container">
+            <h4>Select Volume</h4>
+            <select id="volumeOption" size="5">
+                <option value="mute">mute</option>
+                <option value="twentyFivePercent">25%</option>
+                <option value="fiftyPercent">50%</option>
+                <option value="seventyFivePercent">75%</option>
+                <option value="fullVolume">100%</option>
+            </select>
+        </div>
+             <div id="sound-container">
+            <h4>Set Custom Times (in minutes)</h4>
+            <div class="timerSettings">
+                <label for="pomodroTimerSettings">Pomodoro</label>
+                <input id="pomodoroTimerSettings" type="number" step="1" min="1">
+            </div>
+
+            <div class="timerSettings">
+                <label for="shortBreakSettings">Short Break</label>
+                <input id="shortBreakSettings" type="number" step="1" min="1">
+            </div>
+
+            <div class="timerSettings">
+                <label for="longBreakSettings">Long Break</label>
+                <input id="longBreakSettings" type="number" step="1" min="1">
+            </div>
+        </div>
+             <div id="sound-container">
+            <button>Save</button>
+            <button>Reset</button>
+            <button>Sound Test</button>
+        </div>
+    </div>
+</div>
