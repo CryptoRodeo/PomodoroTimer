@@ -4,9 +4,11 @@
 }
 
 div.settings-container{
+    font-family: inherit;
     position: fixed;
     display: flex;
     flex-direction: row;
+    font-size: 1rem;
     align-items: center;
     justify-content: center;
     top: 0;
@@ -21,11 +23,12 @@ div.settings-container{
 div#preference-settings-container {
     display: flex;
     flex-direction: column;
-    padding: .3125rem;
+    padding: .3125rem 0;
 }
 
 input.preference-input {
     margin-right: .3125rem;
+    margin-bottom: 1rem;
 }
 
 body.settings-page-open {
@@ -34,16 +37,54 @@ body.settings-page-open {
 
 div#settings-option-container {
     background-color: #FFF;
-    width: 50%;
-    height: 60%;
+    width: 45%;
+    height: 70%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     padding: 20px;
 }
 
+h2.settings-header {
+    margin: .5rem 0;
+}
+
+label.timer-setting-labels {
+    margin-right: .3125rem;
+}
+
+div#timer-settings-inner-container {
+    display: flex;
+}
+
+input.timer-setting {
+    height: 2rem;
+    margin-right: 30%;
+    border: solid 1px #ccc;
+}
+
 select {
     width: 100%;
     min-width: 75px;
     padding: 5px 0;
+}
+
+div#save-settings-container {
+    display: flex;
+}
+
+button.settings-button {
+    border: none;
+    width: 5rem;
+    margin-right: .3125rem;
+    height: 2rem;
+    background-color: #39C0ED;
+    color: #FFF;
+    border-radius: .5rem;
+}
+
+button.settings-button:hover {
+    background-color: #00B0FF;
+    cursor: pointer;
+    transition: linear .2s;
 }

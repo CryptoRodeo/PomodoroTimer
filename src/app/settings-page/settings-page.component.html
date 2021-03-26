@@ -2,7 +2,7 @@
     <div id="settings-option-container">
         <h1>Options</h1>
         <div id="preferences-container">
-            <h4>User Preferences</h4>
+            <h2 class="settings-header" >User preferences</h2>
             <div id="preference-settings-container">
                 <div class="preference-setting-container">
                     <input class="preference-input" id="timerIndicatorOption" type="checkbox">
@@ -22,8 +22,8 @@
             </div>
 
         </div>
-        <div id="sound-container">
-            <h4>Select Sound</h4>
+        <div id="alert-option-container">
+            <h2 class="settings-header" >Select Sound</h2>
             <select id="alertOption" size="5">
                 <option value="beep">Beep</option>
                 <option value="beep">Test</option>
@@ -32,8 +32,9 @@
                 <option value="beep">Test</option>
             </select>
         </div>
-             <div id="sound-container">
-            <h4>Select Volume</h4>
+
+        <div id="volume-option-container">
+            <h2 class="settings-header" >Select Volume</h2>
             <select id="volumeOption" size="5">
                 <option value="mute">mute</option>
                 <option value="twentyFivePercent">25%</option>
@@ -42,27 +43,31 @@
                 <option value="fullVolume">100%</option>
             </select>
         </div>
-             <div id="sound-container">
-            <h4>Set Custom Times (in minutes)</h4>
-            <div class="timerSettings">
-                <label for="pomodroTimerSettings">Pomodoro</label>
-                <input id="pomodoroTimerSettings" type="number" step="1" min="1">
+
+        <div id="timer-settings-container">
+            <h2 class="settings-header">Set Custom Times (in minutes)</h2>
+            <div id="timer-settings-inner-container">
+                <div class="timerSettings">
+                    <label class="timer-setting-labels" for="pomodroTimerSettings">Pomodoro</label>
+                    <input class="timer-setting" id="pomodoroTimerSettings" type="number" step="1" min="1">
+                </div>
+                <div class="timerSettings">
+                    <label class="timer-setting-labels" for="shortBreakSettings">Short Break</label>
+                    <input class="timer-setting" id="shortBreakSettings" type="number" step="1" min="1">
+                </div>
+                <div class="timerSettings">
+                    <label class="timer-setting-labels" for="longBreakSettings">Long Break</label>
+                    <input class="timer-setting" id="longBreakSettings" type="number" step="1" min="1">
+                </div>
             </div>
 
-            <div class="timerSettings">
-                <label for="shortBreakSettings">Short Break</label>
-                <input id="shortBreakSettings" type="number" step="1" min="1">
-            </div>
+        </div>
 
-            <div class="timerSettings">
-                <label for="longBreakSettings">Long Break</label>
-                <input id="longBreakSettings" type="number" step="1" min="1">
-            </div>
+        <div id="save-settings-container">
+            <button class="settings-button">Save</button>
+            <button class="settings-button">Reset</button>
+            <button class="settings-button">Sound Test</button>
         </div>
-             <div id="sound-container">
-            <button>Save</button>
-            <button>Reset</button>
-            <button>Sound Test</button>
-        </div>
+
     </div>
 </div>
