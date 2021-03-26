@@ -18,6 +18,16 @@ div.settings-container{
     background-color: rgba(0,0,0,0.45);
 }
 
+div#preference-settings-container {
+    display: flex;
+    flex-direction: column;
+    padding: .3125rem;
+}
+
+input.preference-input {
+    margin-right: .3125rem;
+}
+
 body.settings-page-open {
     overflow: hidden;
 }
@@ -29,6 +39,7 @@ div#settings-option-container {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    padding: 20px;
 }
 
 select {

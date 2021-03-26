@@ -3,14 +3,24 @@
         <h1>Options</h1>
         <div id="preferences-container">
             <h4>User Preferences</h4>
-            <input id="timerIndicatorOption" type="checkbox">
-            <label for="timerIndicatorOption">Timer indication in browser tab?</label>
+            <div id="preference-settings-container">
+                <div class="preference-setting-container">
+                    <input class="preference-input" id="timerIndicatorOption" type="checkbox">
+                    <label for="timerIndicatorOption">Timer indication in browser tab?</label>
+                </div>
+   
+                <div class="preference-setting-container">
+                    <input class="preference-input" id="browserNotificationOption" type="checkbox">
+                    <label for="browserNotificationOption">Browser notifications?</label>
+                </div>
 
-            <input id="browserNotificationOption" type="checkbox">
-            <label for="browserNotificationOption">Browser notifications?</label>
+                <div class="preference-setting-container">
+                    <input class="preference-input" id="autoStartTimersOption" type="checkbox">
+                    <label for="autoStartTimersOption">Auto start pomodoros and breaks?</label>
+                </div>
 
-            <input id="autoStartTimersOption" type="checkbox">
-            <label for="autoStartTimersOption">Auto start pomodoros and breaks?</label>
+            </div>
+
         </div>
         <div id="sound-container">
             <h4>Select Sound</h4>
