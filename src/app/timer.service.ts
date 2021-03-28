@@ -1,18 +1,19 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Input } from '@angular/core';
 import { NotificationService } from './notification.service';
+import { PomodoroTimePeriods } from './pomodoro-time-periods';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TimerService {
 
-  private timePeriods = {
+  timePeriods: PomodoroTimePeriods = {
     pomodoro: 30,
     shortBreak: 5,
     longBreak: 10
   };
 
-  private pomodoroTime = this.convertToSeconds(30); // Default time is 30 minutes
+  private pomodoroTime = this.convertToSeconds(this.timePeriods.pomodoro); // Default time is 30 minutes
   private timeSet = this.timePeriods.pomodoro;
   private timerStarted = false;
   private title = document.querySelector('title');
@@ -20,14 +21,40 @@ export class TimerService {
   private isPomodoro = false;
   private isBreak = false;
 
-
-
   constructor(private notificationService: NotificationService) {
 
   }
 
   private convertToSeconds(minutes: number): number {
     return (minutes * 60);
+  }
+
+  getTimePeriods(): PomodoroTimePeriods {
+    return this.timePeriods;
+  }
+
+  getDefaultPomodoro(): number {
+    return this.timePeriods.pomodoro;
+  }
+
+  getDefaultShortBreak(): number {
+    return this.timePeriods.shortBreak;
+  }
+
+  getDefaultLongBreak(): number {
+    return this.timePeriods.longBreak;
+  }
+
+  setDefaultPomodoro(val): void {
+    this.timePeriods.pomodoro = val;
+  }
+
+  setDefaultShortBreak(val): void {
+    this.timePeriods.shortBreak = val;
+  }
+
+  setDefaultLongBreak(val): void {
+    this.timePeriods.longBreak = val;
   }
 
   setPomodoro(): void {
@@ -63,8 +90,8 @@ export class TimerService {
     /**
      * Get minutes and seconds, add padding.
      */
-    const minutes = time.getUTCMinutes().toString().padStart(2,'0');
-    const seconds = time.getSeconds().toString().padStart(2,'0');
+    const minutes = time.getUTCMinutes().toString().padStart(2, '0');
+    const seconds = time.getSeconds().toString().padStart(2, '0');
     return `${minutes} : ${seconds}`;
   }
 
@@ -72,7 +99,7 @@ export class TimerService {
   {
     if (this.timerStarted ) { return; }
     this.timerStarted = true;
-    this.clearIntervalIDs()
+    this.clearIntervalIDs();
     this.updateTitle();
     // Call this.countDown && this.updateTile(), bind the call to this service using arrow operator.
     // Will probably move the title updating to a component or service soon.
@@ -100,7 +127,7 @@ export class TimerService {
 
   stopTimer(): void
   {
-    this.clearIntervalIDs()
+    this.clearIntervalIDs();
     this.timerStarted = false;
   }
 
@@ -114,7 +141,7 @@ export class TimerService {
 
   resetTimer(): void
   {
-    this.clearIntervalIDs()
+    this.clearIntervalIDs();
     this.pomodoroTime = this.convertToSeconds(this.timeSet);
     this.updateTitle();
     this.timerStarted = false;
