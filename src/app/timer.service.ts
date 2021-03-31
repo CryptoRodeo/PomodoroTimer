@@ -12,9 +12,10 @@ export class TimerService {
     shortBreak: 5,
     longBreak: 10
   };
-
-  private pomodoroTime = this.convertToSeconds(this.timePeriods.pomodoro); // Default time is 30 minutes
-  private timeSet = this.timePeriods.pomodoro;
+  private tabIndicatorAllowed = true;
+  private autoStartTimer = false;
+  private timeSet = this.timePeriods.pomodoro; // Default time is 30 minutes
+  private pomodoroTime = this.convertToSeconds(this.timePeriods.pomodoro);
   private timerStarted = false;
   private title = document.querySelector('title');
   private timerIntervalID = null;
@@ -27,6 +28,10 @@ export class TimerService {
 
   private convertToSeconds(minutes: number): number {
     return (minutes * 60);
+  }
+
+  autoStartTimers(): Boolean {
+    return this.autoStartTimer;
   }
 
   getTimePeriods(): PomodoroTimePeriods {
@@ -95,6 +100,10 @@ export class TimerService {
     return `${minutes} : ${seconds}`;
   }
 
+  browserTabIndicationAllowed(): Boolean {
+    return this.tabIndicatorAllowed;
+  }
+
   startTimer(): void
   {
     if (this.timerStarted ) { return; }
@@ -112,6 +121,9 @@ export class TimerService {
   }
 
   updateTitle(): void {
+    if (!this.browserTabIndicationAllowed()) {
+      return;
+    }
     this.title.innerHTML = `( ${this.getTime()} )`;
   }
 
