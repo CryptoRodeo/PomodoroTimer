@@ -5,12 +5,24 @@ import { Injectable } from '@angular/core';
 })
 export class NotificationService {
 
+  private permissionGranted: Boolean = (Notification.permission === 'granted');
+
   private audioFiles = {
-    beep: '../assets/audio/alarm_beeps.mp3'
+    beep: '../assets/audio/alarm_beeps.mp3',
+    retro: '../assets/audio/alarm_beeps.mp3',
+    nuclear: '../assets/audio/alarm_beeps.mp3',
+    dog: '../assets/audio/alarm_beeps.mp3',
+    modern: '../assets/audio/alarm_beeps.mp3'
   };
 
-  constructor() {
+  constructor() {}
 
+  getAudioFiles(): Object {
+    return this.audioFiles;
+  }
+
+  getPermissionGranted(): Boolean {
+    return this.permissionGranted;
   }
 
   askNotificationPermission(): void {
@@ -30,9 +42,8 @@ export class NotificationService {
         if (p === 'granted') {
           // show notification here
           this.showPermissionNotification();
-
         } else {
-            console.log('User blocked notifications.');
+          console.log('User blocked notifications.');
         }
       }).catch((err) => {
           console.error(err);
