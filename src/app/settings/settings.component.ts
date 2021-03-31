@@ -10,17 +10,23 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
+  // Audio alter files
+  audioFiles: Array<String> = Object.getOwnPropertyNames(this.notificationService.getAudioFiles());
+  browserNotificationPermission: Boolean = this.notificationService.getPermissionGranted();
+  browserTabNotificationAllowd: Boolean = this.timerService.browserTabIndicationAllowed();
+  autoStartTimers: Boolean = this.timerService.autoStartTimers();
+
   settingsForm = new FormGroup({
     alertPreferences: new FormGroup({
-      soundOptions: new FormControl() 
+      soundOptions: new FormControl(this.audioFiles)
     }),
     volumePreferences: new FormGroup({
       volumeOptions: new FormControl({})
     }),
     notificationPreferences: new FormGroup({
-      timerIndication: new FormControl(true),
-      browserNotification: new FormControl(true),
-      autoStartTimer: new FormControl(true)
+      timerIndication: new FormControl(this.browserTabNotificationAllowd),
+      browserNotification: new FormControl(this.browserNotificationPermission),
+      autoStartTimer: new FormControl(this.autoStartTimers)
     }),
     timerPreferences: new FormGroup({
       pomodoroSetting: new FormControl(this.getTimePeriods().pomodoro),
