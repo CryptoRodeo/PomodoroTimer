@@ -13,7 +13,7 @@ export class SettingsComponent implements OnInit {
   // Audio alter files
   audioFiles: Array<String> = Object.getOwnPropertyNames(this.notificationService.getAudioFiles());
   browserNotificationPermission: Boolean = this.notificationService.getPermissionGranted();
-  browserTabNotificationAllowd: Boolean = this.timerService.browserTabIndicationAllowed();
+  browserTabNotificationAllowed: Boolean = this.timerService.browserTabIndicationAllowed();
   autoStartTimers: Boolean = this.timerService.autoStartTimers();
 
   settingsForm = new FormGroup({
@@ -24,7 +24,7 @@ export class SettingsComponent implements OnInit {
       volumeOptions: new FormControl({})
     }),
     notificationPreferences: new FormGroup({
-      timerIndication: new FormControl(this.browserTabNotificationAllowd),
+      timerIndication: new FormControl(this.browserTabNotificationAllowed),
       browserNotification: new FormControl(this.browserNotificationPermission),
       autoStartTimer: new FormControl(this.autoStartTimers)
     }),
