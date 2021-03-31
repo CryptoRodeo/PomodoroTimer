@@ -46,8 +46,9 @@ select {
   padding: 5px 0;
 }
 
-div#save-settings-container {
+div#settings-button-container {
   display: flex;
+  margin-top: 1rem;
 }
 
 button.settings-button {
