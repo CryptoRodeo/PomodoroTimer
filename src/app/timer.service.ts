@@ -1,6 +1,7 @@
 import { Injectable, Input } from '@angular/core';
 import { NotificationService } from './notification.service';
 import { PomodoroTimePeriods } from './pomodoro-time-periods';
+import { TimeManager } from './time-manager';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +13,17 @@ export class TimerService {
     shortBreak: 5,
     longBreak: 10
   };
+
   private tabIndicatorAllowed = true;
   private autoStartTimer = false;
-  private timeSet = this.timePeriods.pomodoro; // Default time is 30 minutes
-  private pomodoroTime = this.convertToSeconds(this.timePeriods.pomodoro);
+  // private timeManager = {
+  //   timeSet: this.timePeriods.pomodoro,
+  //   currentCountDownValue: this.timePeriods.pomodoro
+  // };
+
+  private timeManager = new TimeManager(this.timePeriods.pomodoro);
+  // private timeSet = this.timePeriods.pomodoro; // By default use the Pomodoro time period
+  // private currentCountDownValue = this.convertToSeconds(this.timePeriods.pomodoro);
   private timerStarted = false;
   private title = document.querySelector('title');
   private timerIntervalID = null;
@@ -26,9 +34,9 @@ export class TimerService {
 
   }
 
-  private convertToSeconds(minutes: number): number {
-    return (minutes * 60);
-  }
+  // private convertToSeconds(minutes: number): number {
+  //   return (minutes * 60);
+  // }
 
   autoStartTimers(): Boolean {
     return this.autoStartTimer;
@@ -80,18 +88,20 @@ export class TimerService {
     this.updateTitle();
   }
 
+  /**
+   * This seems redundant.
+   */
   setTime(minutes: number): void
   {
-    this.timeSet = minutes;
-    this.pomodoroTime = this.convertToSeconds(this.timeSet);
+    this.timeManager.setTimePeriod(minutes);
   }
 
   timerRunning(): boolean {
     return this.timerStarted;
   }
 
-  formatTime(timeInS: number): string {
-    const time = new Date(timeInS * 1000);
+  formatTime(timeInSeconds: number): string {
+    const time = new Date(timeInSeconds * 1000);
     /**
      * Get minutes and seconds, add padding.
      */
@@ -117,7 +127,8 @@ export class TimerService {
 
   getTime(): string
   {
-    return this.formatTime(this.pomodoroTime);
+    return this.timeManager.formatTime();
+//    return this.formatTime(this.currentCountDownValue);
   }
 
   updateTitle(): void {
@@ -129,8 +140,10 @@ export class TimerService {
 
   countDown(): void
   {
-    if (this.pomodoroTime > 0) {
-      this.pomodoroTime--;
+    if (this.timeManager.countDownValue > 0) {
+      this.timeManager.countDown();
+      // console.log(`from the timer service ${this.currentCountDownValue}`);
+      // this.currentCountDownValue--;
       return;
     }
     this.notifyUser();
@@ -144,7 +157,7 @@ export class TimerService {
   }
 
   formatNotification(): { header , body } {
-    if ( this.timeSet === this.timePeriods.shortBreak || this.timeSet === this.timePeriods.longBreak)
+    if ( this.timeManager.timePeriod !== this.timePeriods.pomodoro )
     {
       return { header: 'Break over', body: '' };
     }
@@ -154,7 +167,8 @@ export class TimerService {
   resetTimer(): void
   {
     this.clearIntervalIDs();
-    this.pomodoroTime = this.convertToSeconds(this.timeSet);
+    this.timeManager.resetCountDownValue();
+//    this.currentCountDownValue = this.convertToSeconds(this.timeSet);
     this.updateTitle();
     this.timerStarted = false;
   }
