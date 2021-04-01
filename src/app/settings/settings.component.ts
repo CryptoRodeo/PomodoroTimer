@@ -47,12 +47,4 @@ export class SettingsComponent implements OnInit {
   getTimePeriods(): PomodoroTimePeriods {
     return this.timerService.getTimePeriods();
   }
-
-  defaultShortBreak(): number {
-    return this.timerService.getDefaultShortBreak();
-  }
-
-  defaultLongBreak(): number {
-    return this.timerService.getDefaultLongBreak();
-  }
 }
