@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class NotificationService {
 
-  private permissionGranted: Boolean = (Notification.permission === 'granted');
+  private permissionGranted: Boolean = ( Notification.permission === 'granted' );
 
   private audioFiles = {
     beep: '../assets/audio/alarm_beeps.mp3',
