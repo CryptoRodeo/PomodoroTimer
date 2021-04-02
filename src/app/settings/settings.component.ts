@@ -76,18 +76,26 @@ export class SettingsComponent implements OnInit {
   }
 
   saveAlertPreferences(settingChanges: Object): void {
-    console.log(settingChanges);
+    let alertChanges = this.extractControls(settingChanges);
+    console.log(alertChanges);
   }
 
   saveNotificationPreferencers(settingChanges: Object): void {
-    console.log(settingChanges);
+    let notificationChanges = this.extractControls(settingChanges);
+    console.log(notificationChanges);
   }
 
   saveTimerPreferences(settingChanges: Object): void {
-    console.log(settingChanges);
+    let timerChanges = this.extractControls(settingChanges);
+    console.log(timerChanges);
   }
 
   saveVolumePreferences(settingChanges: Object): void {
-    console.log(settingChanges);
+    let volumeChanges = this.extractControls(settingChanges);
+    console.log(volumeChanges);
+  }
+
+  private extractControls(settingControl: Object): Object {
+    return settingControl["controls"];
   }
 }
