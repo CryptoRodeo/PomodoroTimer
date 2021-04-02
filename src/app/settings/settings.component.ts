@@ -71,7 +71,7 @@ export class SettingsComponent implements OnInit {
     //Delegate the settingchanges to their respective functions using the
     // settingsFunctionDelegator object
     for (const [_settingName, callback] of Object.entries(settingsFunctionDelegator)) {
-      if (String(settingName) == _settingName) { callback(setting); }
+      if (String(settingName) == _settingName) { callback(setting); };
     }
   }
 
