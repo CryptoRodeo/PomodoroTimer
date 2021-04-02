@@ -1,6 +1,6 @@
 <div id="settings-option-container">
     <h1>Options</h1>
-    <form [formGroup]="settingsForm">
+    <form [formGroup]="settingsForm" (ngSubmit)="applySettings()">
         <div formGroupName="notificationPreferences" id="preferences-container">
             <h2 class="settings-header" >User preferences</h2>
             <div id="preference-settings-container">
@@ -34,7 +34,7 @@
         <div id="alert-option-container" formGroupName="alertPreferences">
             <h2 class="settings-header" >Select Sound</h2>
             <select id="alertOption" size="5" formControlName="soundOptions">
-                <option *ngFor="let name of audioFiles" [ngValue]="name">{{name}}</option>
+                <option *ngFor="let name of getAudioFiles()" [ngValue]="name">{{name}}</option>
             </select>
         </div>
         <div id="volume-option-container" formGroupName="volumePreferences">
@@ -59,7 +59,6 @@
                     type="number" 
                     step="1" 
                     min="1" 
-                    (click)="logTimePeriods()" 
                     formControlName="pomodoroSetting"
                     />
                 </div>
@@ -88,7 +87,7 @@
             </div>
         </div>
         <div id="settings-button-container">
-            <button class="settings-button">Save</button>
+            <button class="settings-button" type="submit">Save</button>
             <button class="settings-button">Reset</button>
             <button class="settings-button">Sound Test</button>
         </div>
