@@ -3,6 +3,7 @@ import { TimerService } from '../timer.service';
 import { NotificationService } from '../notification.service';
 import { PomodoroTimePeriods } from '../pomodoro-time-periods';
 import { FormGroup, FormControl } from '@angular/forms';
+import { TimerSettings } from '../timer-setting';
 
 @Component({
   selector: 'app-settings',
@@ -85,9 +86,21 @@ export class SettingsComponent implements OnInit {
     console.log(notificationChanges);
   }
 
-  saveTimerPreferences(settingChanges: Object): void {
-    let timerChanges = this.extractControls(settingChanges);
-    console.log(timerChanges);
+  saveTimerPreferences(settingChanges: Object ): void {
+    let _timerControlValues = this.extractControls(settingChanges);
+
+    let timerSetting: TimerSettings = {
+      pomodoroSetting: _timerControlValues["pomodoroSetting"].value,
+      longBreakSetting: _timerControlValues["longBreakSetting"].value,
+      shortBreakSetting: _timerControlValues["shortBreakSetting"].value
+    };
+
+    let { pomodoroSetting, longBreakSetting, shortBreakSetting } = timerSetting;
+
+    console.log(pomodoroSetting);
+    console.log(longBreakSetting);
+    console.log(shortBreakSetting);
+//    console.log(timerChanges);
   }
 
   saveVolumePreferences(settingChanges: Object): void {
