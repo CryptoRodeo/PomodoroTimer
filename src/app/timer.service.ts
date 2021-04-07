@@ -1,96 +1,146 @@
 import { Injectable, Input } from '@angular/core';
 import { NotificationService } from './notification.service';
-import { PomodoroTimePeriods } from './pomodoro-time-periods';
-import { TimeManager } from './time-manager';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class TimerService {
+  private POMODORO = "pomodoro";
+  private SHORTBREAK = "shortBreak";
+  private LONGBREAK = "longBreak";
+  private TIMEPERIODKEYS = [this.POMODORO,this.SHORTBREAK,this.LONGBREAK];
 
-  timePeriods: PomodoroTimePeriods = {
+  private defaultTimePeriods = {
     pomodoro: 30,
     shortBreak: 5,
     longBreak: 10
-  };
+  }
+  private TimeManager = {
+    pomodoro: 30,
+    shortBreak: 5,
+    longBreak: 10,
+    timePeriodSelected: this.POMODORO,
+    countDownValue: null,
+    timeFormatted: null
+  }
 
   private tabIndicatorAllowed = true;
   private autoStartTimer = false;
-  private timeManager = new TimeManager(this.timePeriods.pomodoro);
   private timerStarted = false;
   private title = document.querySelector('title');
   private timerIntervalID = null;
 
-  constructor(private notificationService: NotificationService) {}
+  constructor(private notificationService: NotificationService) 
+  {
+    this.TimeManager.countDownValue = this.convertToSeconds(this.getTimePeriodSelected());
+  }
+
+  convertToSeconds = (minutes: number): number => {
+    return (minutes * 60);
+  }
+
+  getTimePeriodSelected(): number {
+    let timePeriod: string = this.TimeManager.timePeriodSelected;
+    return this.TimeManager[timePeriod];
+  }
 
   autoStartTimers(): Boolean {
     return this.autoStartTimer;
   }
 
-  getTimePeriods(): PomodoroTimePeriods {
-    return this.timePeriods;
+  getTimeManager() {
+    return this.TimeManager;
   }
 
-  getDefaultPomodoro(): number {
-    return this.timePeriods.pomodoro;
+  getPomodoroTimeValue(): number {
+    return this.TimeManager.pomodoro;
+  }
+
+  getShortBreakTimeValue(): number {
+    return this.TimeManager.shortBreak;
+  }
+
+  getLongBreakTimeValue(): number {
+    return this.TimeManager.longBreak;
   }
 
   getDefaultShortBreak(): number {
-    return this.timePeriods.shortBreak;
+    return this.TimeManager.shortBreak;
   }
 
   getDefaultLongBreak(): number {
-    return this.timePeriods.longBreak;
+    return this.TimeManager.longBreak;
   }
 
   setDefaultPomodoro(val): void {
-    this.timePeriods.pomodoro = val;
+    this.TimeManager.pomodoro = val;
+
+    if (this.TimeManager.timePeriodSelected == this.POMODORO)
+    {
+      Object.assign(this.TimeManager,{
+        countDownValue: this.convertToSeconds(val)
+      })
+    }
   }
 
   setDefaultShortBreak(val): void {
-    this.timePeriods.shortBreak = val;
+    this.TimeManager.shortBreak= val;
+
+    if (this.TimeManager.timePeriodSelected == this.SHORTBREAK)
+    {
+      Object.assign(this.TimeManager,{
+        countDownValue: this.convertToSeconds(val)
+      })
+    }
   }
 
   setDefaultLongBreak(val): void {
-    this.timePeriods.longBreak = val;
+    this.TimeManager.longBreak = val;
+    if (this.TimeManager.timePeriodSelected == this.LONGBREAK)
+    {
+      Object.assign(this.TimeManager,{
+        countDownValue: this.convertToSeconds(val)
+      })
+    }
   }
 
   setPomodoro(): void {
     this.clearIntervalIDs();
-    this.setTime(this.timePeriods.pomodoro);
+    this.setTime(this.TimeManager.pomodoro, this.POMODORO);
     this.updateTitle();
   }
 
   setShortBreak(): void {
     this.clearIntervalIDs();
-    this.setTime(this.timePeriods.shortBreak);
+    this.setTime(this.TimeManager.shortBreak, this.SHORTBREAK);
     this.updateTitle();
   }
 
   setLongBreak(): void {
     this.clearIntervalIDs();
-    this.setTime(this.timePeriods.longBreak);
+    this.setTime(this.TimeManager.longBreak, this.LONGBREAK);
     this.updateTitle();
   }
 
-  setTime(minutes: number): void
+  setTime(minutes: number, type: string): void
   {
-    this.timeManager.setTimePeriod(minutes);
+    if ( !this.TIMEPERIODKEYS.includes(type) )
+    {
+      console.error(`Invalid type '${type}' passed. Time could not be set.`);
+      return;
+    }
+
+    Object.assign(this.TimeManager, {
+      timePeriodSelected: type,
+      countDownValue: this.convertToSeconds(minutes)
+    });
   }
 
   timerRunning(): boolean {
     return this.timerStarted;
   }
 
-  formatTime(timeInSeconds: number): string {
-    const time = new Date(timeInSeconds * 1000);
-    
-    // Get minutes and seconds, add padding.
-    const minutes = time.getUTCMinutes().toString().padStart(2, '0');
-    const seconds = time.getSeconds().toString().padStart(2, '0');
-    return `${minutes} : ${seconds}`;
-  }
 
   browserTabIndicationAllowed(): Boolean {
     return this.tabIndicatorAllowed;
@@ -106,9 +156,24 @@ export class TimerService {
     this.timerIntervalID = window.setInterval(() => { this.countDown(); this.updateTitle(); }, 1000);
   }
 
+  getCountDownValue() {
+    return this.TimeManager.countDownValue;
+  }
+
+  formatTime(): string {
+    const time = new Date(this.getCountDownValue() * 1000);
+
+    /**
+     * Get minutes and seconds, add padding.
+     */
+    const minutes = time.getUTCMinutes().toString().padStart(2, '0');
+    const seconds = time.getSeconds().toString().padStart(2, '0');
+    return `${minutes} : ${seconds}`;
+  }
+
   getTime(): string
   {
-    return this.timeManager.formatTime();
+    return this.formatTime();
   }
 
   updateTitle(): void {
@@ -120,8 +185,8 @@ export class TimerService {
 
   countDown(): void
   {
-    if (this.timeManager.countDownValue > 0) {
-      this.timeManager.countDown();
+    if (this.TimeManager.countDownValue > 0) {
+      this.TimeManager.countDownValue -= 1;
       return;
     }
     this.notifyUser();
@@ -135,19 +200,23 @@ export class TimerService {
   }
 
   formatNotification(): { header , body } {
-    if ( this.timeManager.timePeriod !== this.timePeriods.pomodoro )
+    if ( this.TimeManager.timePeriodSelected !== this.POMODORO )
     {
       return { header: 'Break over', body: '' };
     }
-    return { header: 'Pomodoro over', body: 'Take a break!' };
+    return { header: 'Pomodoro over', body: 'Take a break!' }
   }
 
   resetTimer(): void
   {
     this.clearIntervalIDs();
-    this.timeManager.resetCountDownValue();
+    this.setTime(this.getTimePeriodSelected(), this.TimeManager.timePeriodSelected);
     this.updateTitle();
     this.timerStarted = false;
+  }
+
+  resetTimerValues(): void {
+    Object.assign(this.TimeManager,this.defaultTimePeriods);
   }
 
   notifyUser(): void {
