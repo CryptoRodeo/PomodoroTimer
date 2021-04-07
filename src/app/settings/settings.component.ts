@@ -1,9 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { TimerService } from '../timer.service';
 import { NotificationService } from '../notification.service';
-import { PomodoroTimePeriods } from '../pomodoro-time-periods';
 import { FormGroup, FormControl } from '@angular/forms';
-import { TimerSettings } from '../timer-setting';
 
 @Component({
   selector: 'app-settings',
@@ -25,18 +23,15 @@ export class SettingsComponent implements OnInit {
       autoStartTimer: new FormControl(this.autoStartTimer())
     }),
     timerPreferences: new FormGroup({
-      pomodoroSetting: new FormControl(this.getTimePeriods().pomodoro),
-      shortBreakSetting: new FormControl(this.getTimePeriods().shortBreak),
-      longBreakSetting: new FormControl(this.getTimePeriods().longBreak)
+      pomodoroSetting: new FormControl(this.timerService.getPomodoroTimeValue()),
+      shortBreakSetting: new FormControl(this.timerService.getShortBreakTimeValue()),
+      longBreakSetting: new FormControl(this.timerService.getLongBreakTimeValue())
     })
   });
+
   constructor(private timerService: TimerService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
-  }
-
-  getTimePeriods(): PomodoroTimePeriods {
-    return this.timerService.getTimePeriods();
   }
 
   getAudioFiles(): Array<String> {
@@ -87,20 +82,19 @@ export class SettingsComponent implements OnInit {
   }
 
   saveTimerPreferences(settingChanges: Object ): void {
-    let _timerControlValues = this.extractControls(settingChanges);
-
-    let timerSetting: TimerSettings = {
-      pomodoroSetting: _timerControlValues["pomodoroSetting"].value,
-      longBreakSetting: _timerControlValues["longBreakSetting"].value,
-      shortBreakSetting: _timerControlValues["shortBreakSetting"].value
+    let timerControlValues = this.extractControls(settingChanges);
+    
+    let timerSetting = {
+      pomodoroSetting: timerControlValues["pomodoroSetting"].value,
+      longBreakSetting: timerControlValues["longBreakSetting"].value,
+      shortBreakSetting: timerControlValues["shortBreakSetting"].value
     };
 
     let { pomodoroSetting, longBreakSetting, shortBreakSetting } = timerSetting;
 
-    console.log(pomodoroSetting);
-    console.log(longBreakSetting);
-    console.log(shortBreakSetting);
-//    console.log(timerChanges);
+    this.timerService.setDefaultPomodoro(pomodoroSetting);
+    this.timerService.setDefaultShortBreak(shortBreakSetting);
+    this.timerService.setDefaultLongBreak(longBreakSetting);
   }
 
   saveVolumePreferences(settingChanges: Object): void {
