@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef } from '@angular/core';
 import { TimerService } from '../timer.service';
 import { NotificationService } from '../notification.service';
+import { PermissionService } from '../permission.service';
 import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
@@ -29,7 +30,12 @@ export class SettingsComponent implements OnInit {
     })
   });
 
-  constructor(private timerService: TimerService, private notificationService: NotificationService) { }
+  constructor
+  (
+    private timerService: TimerService, 
+    private notificationService: NotificationService,
+    private permissionService: PermissionService
+    ) { }
 
   ngOnInit(): void {
   }
@@ -39,11 +45,11 @@ export class SettingsComponent implements OnInit {
   }
 
   getBrowserNotificationPermission(): Boolean {
-    return this.notificationService.getPermissionGranted();
+    return this.permissionService.browserTabNotificationsAllowed();
   }
 
   getBrowserTabPermission(): Boolean {
-    return this.timerService.browserTabIndicationAllowed();
+    return this.permissionService.browserTabNotificationsAllowed();
   }
 
   autoStartTimer(): Boolean {
@@ -58,10 +64,10 @@ export class SettingsComponent implements OnInit {
 
   delegateSettingsToFunctions(settingName, setting: object): void {
     const settingsFunctionDelegator: Object = {
-      "alertPreferences": (setting) => { this.saveAlertPreferences(setting) },
-      "volumePreferences": (setting) => { this.saveVolumePreferences(setting) },
-      "notificationPreferences": (setting) => { this.saveNotificationPreferencers(setting) },
-      "timerPreferences": (setting) => { this.saveTimerPreferences(setting) }
+      "alertPreferences": (setting) => this.saveAlertTonePreference(setting),
+      "volumePreferences": (setting) => this.saveVolumePreferences(setting),
+      "notificationPreferences": (setting) => this.saveNotificationPreferences(setting),
+      "timerPreferences": (setting) => this.saveTimerPreferences(setting)
     };
 
     //Delegate the settingchanges to their respective functions using the
@@ -71,14 +77,21 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  saveAlertPreferences(settingChanges: Object): void {
+  saveAlertTonePreference(settingChanges: Object): void {
     let alertChanges = this.extractControls(settingChanges);
     console.log(alertChanges);
   }
 
-  saveNotificationPreferencers(settingChanges: Object): void {
+  saveNotificationPreferences(settingChanges: Object): void {
+    console.log('notificationPerferences called');
     let notificationChanges = this.extractControls(settingChanges);
-    console.log(notificationChanges);
+
+    let notificationPreferences = {
+      autoStartTimer: notificationChanges["autoStartTimer"].value,
+      browserNotification: notificationChanges["browserNotification"].value,
+      timerIndication: notificationChanges["timerIndication"].value,
+    }
+    console.log(notificationPreferences);
   }
 
   saveTimerPreferences(settingChanges: Object ): void {
