@@ -14,6 +14,10 @@ export class NotificationService {
     modern: '../assets/audio/alarm_beeps.mp3'
   };
 
+  private audioSettings = {
+    duration: 4.5
+  }
+
   private notificationIcon = '../assets/tomato.png';
 
   constructor(private permissionService: PermissionService) {}
@@ -23,6 +27,10 @@ export class NotificationService {
   }
   getAudioFiles(): Object {
     return this.audioFiles;
+  }
+
+  getAudioDuration(): number {
+    return this.audioSettings.duration;
   }
 
   getBrowserNotificationPermission(): Boolean {
@@ -51,7 +59,7 @@ export class NotificationService {
 
   limitAudioDuration(audio): void {
     audio.addEventListener('timeupdate', () => {
-      if (audio.currentTime >= 4.5) {
+      if (audio.currentTime >= this.getAudioDuration()) {
         audio.pause();
       }
     });
