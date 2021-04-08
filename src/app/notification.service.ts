@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
+import { PermissionService } from './permission.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
-
-  private permissionGranted: Boolean = ( Notification.permission === 'granted' );
 
   private audioFiles = {
     beep: '../assets/audio/alarm_beeps.mp3',
@@ -15,50 +14,30 @@ export class NotificationService {
     modern: '../assets/audio/alarm_beeps.mp3'
   };
 
-  constructor() {}
+  private notificationIcon = '../assets/tomato.png';
 
+  constructor(private permissionService: PermissionService) {}
+
+  updateTitle(): void {
+
+  }
   getAudioFiles(): Object {
     return this.audioFiles;
   }
 
-  getPermissionGranted(): Boolean {
-    return this.permissionGranted;
+  getBrowserNotificationPermission(): Boolean {
+    return this.permissionService.browserNotificationsAllowed();
   }
 
-  askNotificationPermission(): void {
-    if (!window.Notification) {
-      alert('This browser does not support desktop notifications.');
-      return;
-    }
-
-    if (Notification.permission === 'granted') {
-      this.showPermissionNotification();
-    }
-
-    else
-    {
-      // request permission from user
-      Notification.requestPermission().then((p) => {
-        if (p === 'granted') {
-          // show notification here
-          this.showPermissionNotification();
-        } else {
-          console.log('User blocked notifications.');
-        }
-      }).catch((err) => {
-          console.error(err);
-      });
-    }
-  }
-
-  showPermissionNotification(): void {
-    const notify = new Notification('Desktop Notifications', {
+  showPermissionNotification(): Notification {
+    return new Notification('Desktop Notifications', {
+      icon: this.notificationIcon,
       body: 'enabled'
     });
   }
 
-  createNotification(header = '', notifBody = '' ): void {
-    const notification = new Notification(header, {
+  createNotification(header = '', notifBody = '' ): Notification {
+    return new Notification(header, {
       body: notifBody
     });
   }
