@@ -34,7 +34,11 @@
         <div id="alert-option-container" formGroupName="alertPreferences">
             <h2 class="settings-header" >Select Sound</h2>
             <select id="alertOption" size="5" formControlName="soundOptions">
-                <option *ngFor="let name of getAudioFiles()" [ngValue]="name">{{name}}</option>
+                <option 
+                *ngFor="let name of getAudioFiles()" 
+                [ngValue]="name"
+                >
+                {{name}}</option>
             </select>
         </div>
         <div id="volume-option-container" formGroupName="volumePreferences">
