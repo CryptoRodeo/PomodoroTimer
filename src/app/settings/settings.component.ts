@@ -35,7 +35,7 @@ export class SettingsComponent implements OnInit {
     private timerService: TimerService, 
     private notificationService: NotificationService,
     private permissionService: PermissionService
-    ) { }
+  ) { }
 
   ngOnInit(): void {
   }
@@ -91,7 +91,7 @@ export class SettingsComponent implements OnInit {
       browserNotification: notificationChanges["browserNotification"].value,
       timerIndication: notificationChanges["timerIndication"].value,
     }
-    console.log(notificationPreferences);
+    this.permissionService.setPermissions(notificationPreferences);
   }
 
   saveTimerPreferences(settingChanges: Object ): void {
