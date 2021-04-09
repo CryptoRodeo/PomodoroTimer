@@ -23,6 +23,14 @@ export class PermissionService {
     return this.base_permissions.browserNotifications;
   }
 
+  getPermissions(): object {
+    return this.base_permissions;
+  }
+
+  setPermissions(new_perms: object) {
+    Object.assign(this.base_permissions, new_perms);
+  }
+
   requestPermissionForBrowserNotifications(): Boolean {
     if (!window.Notification) {
       alert('This browser does not support desktop notifications.');
