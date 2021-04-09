@@ -83,7 +83,6 @@ export class SettingsComponent implements OnInit {
   }
 
   saveNotificationPreferences(settingChanges: Object): void {
-    console.log('notificationPerferences called');
     let notificationChanges = this.extractControls(settingChanges);
 
     let notificationPreferences = {
