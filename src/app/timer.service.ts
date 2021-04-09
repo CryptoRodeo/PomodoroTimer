@@ -229,7 +229,7 @@ export class TimerService {
   }
 
   notifyUser(): void {
-    this.notificationService.playBeep();
+    this.notificationService.playAlert();
     const notificationObj = this.formatNotification();
     const { header, body } = notificationObj;
     this.notificationService.createNotification( header, body );
