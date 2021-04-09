@@ -7,26 +7,38 @@ import { PermissionService } from './permission.service';
 export class NotificationService {
 
   private audioFiles = {
-    beep: '../assets/audio/alarm_beeps.mp3',
-    retro: '../assets/audio/alarm_beeps.mp3',
-    nuclear: '../assets/audio/alarm_beeps.mp3',
-    dog: '../assets/audio/alarm_beeps.mp3',
-    modern: '../assets/audio/alarm_beeps.mp3'
+    beep: { file: '../assets/audio/alarm_beeps.mp3', selected: true } ,
+    retro: { file: '../assets/audio/alarm_beeps.mp3', selected: false },
+    nuclear: { file: '../assets/audio/alarm_beeps.mp3', selected: false },
+    dog: { file: '../assets/audio/alarm_beeps.mp3', selected: false },
+    modern: { file: '../assets/audio/alarm_beeps.mp3', selected: false }
   };
+
 
   private audioSettings = {
     duration: 4.5
   }
-
+  
   private notificationIcon = '../assets/tomato.png';
 
   constructor(private permissionService: PermissionService) {}
 
   updateTitle(): void {
-
   }
+
   getAudioFiles(): Object {
     return this.audioFiles;
+  }
+
+  getSelectedAudioTone(): object {
+    for (const [audio, props] of Object.entries(this.audioFiles)) {
+      if ( props.selected == true ) {
+        return props;
+      }
+    }
+  }
+
+  setSelectedAudioTone():void {
   }
 
   getAudioDuration(): number {
@@ -50,11 +62,12 @@ export class NotificationService {
     });
   }
 
-  playBeep(): void {
+  playAlert(): void {
     const ctx = new AudioContext();
-    const beep = new Audio(this.audioFiles.beep);
-    beep.play();
-    this.limitAudioDuration(beep);
+    const selectedAudioTone = this.getSelectedAudioTone();
+    const selectedTone = new Audio(selectedAudioTone["file"]);
+    selectedTone.play();
+    this.limitAudioDuration(selectedTone);
   }
 
   limitAudioDuration(audio): void {
