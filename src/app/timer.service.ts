@@ -1,6 +1,6 @@
 import { Injectable, Input } from '@angular/core';
 import { NotificationService } from './notification.service';
-
+import { PermissionService } from './permission.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -26,18 +26,23 @@ export class TimerService {
   }
 
   private tabIndicatorAllowed = true;
-  private autoStartTimer = false;
   private timerStarted = false;
   private title = document.querySelector('title');
   private timerIntervalID = null;
 
-  constructor(private notificationService: NotificationService) 
+  constructor(private notificationService: NotificationService, private permissionService: PermissionService) 
   {
     this.TimeManager.countDownValue = this.convertToSeconds(this.getTimePeriodSelected());
+     // Set the auto start timer permission
+    this.permissionService.setPermissions({ autoStartTimer: false });
   }
 
   convertToSeconds = (minutes: number): number => {
     return (minutes * 60);
+  }
+
+  getPermissions(): object {
+    return this.permissionService.getPermissions();
   }
 
   getTimePeriodSelected(): number {
@@ -45,12 +50,16 @@ export class TimerService {
     return this.TimeManager[timePeriod];
   }
 
-  autoStartTimers(): Boolean {
-    return this.autoStartTimer;
-  }
-
   getTimeManager() {
     return this.TimeManager;
+  }
+
+  autoStartTimers(): boolean {
+    if (!this.getPermissions().hasOwnProperty("autoStartTimer")) {
+      console.log('autoStartTimer is not a permission set');
+      return false;
+    }
+    return this.getPermissions()["autoStartTimer"];
   }
 
   getPomodoroTimeValue(): number {
