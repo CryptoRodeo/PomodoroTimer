@@ -63,11 +63,20 @@ export class NotificationService {
   }
 
   playAlert(): void {
-    const ctx = new AudioContext();
-    const selectedAudioTone = this.getSelectedAudioTone();
-    const selectedTone = new Audio(selectedAudioTone["file"]);
-    selectedTone.play();
-    this.limitAudioDuration(selectedTone);
+    // Check if AudioContext is available in the browser API
+    var AudioContext = window["AudioContext"]
+    || window['webkitAudioContext']
+    || false;
+
+    if (AudioContext) {
+      let selectedAudioTone = this.getSelectedAudioTone();
+      const selectedTone = new Audio(selectedAudioTone["file"]);
+      this.limitAudioDuration(selectedTone);
+      selectedTone.play();
+      return;
+    }
+    alert("Sorry, but the Web Audio API is not supported by your browser. Please, consider upgrading to the latest version or downloading Google Chrome or Mozilla Firefox");
+    return;
   }
 
   limitAudioDuration(audio): void {
