@@ -41,7 +41,6 @@ export class SettingsComponent implements OnInit {
   }
 
   getAudioFiles(): Array<String> {
-    console.log(this.notificationService.getAudioFiles());
     return Object.getOwnPropertyNames(this.notificationService.getAudioFiles());
   }
 
@@ -112,7 +111,10 @@ export class SettingsComponent implements OnInit {
 
   saveVolumePreferences(settingChanges: Object): void {
     let volumeChanges = this.extractControls(settingChanges);
-    console.log(volumeChanges);
+    let volumeSelected = volumeChanges["volumeOptions"].value;
+    //Check for whether a volume preference was selected
+    if (typeof volumeSelected == 'object') { return; }
+    this.notificationService.setAudioVolume(volumeSelected);
   }
 
   playAudioFileSelected(): void {
