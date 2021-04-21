@@ -6,6 +6,7 @@ div#settings-option-container {
   flex-direction: column;
   justify-content: space-around;
   padding: 20px;
+  border-radius: 1rem;
 }
 div#preference-settings-container {
   display: flex;
@@ -20,10 +21,6 @@ input.preference-input {
 
 body.settings-page-open {
   overflow: hidden;
-}
-
-div#settings-option-container {
-
 }
 
 h2.settings-header {
@@ -50,8 +47,9 @@ select {
   padding: 5px 0;
 }
 
-div#save-settings-container {
+div#settings-button-container {
   display: flex;
+  margin-top: 1rem;
 }
 
 button.settings-button {

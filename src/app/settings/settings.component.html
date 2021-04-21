@@ -1,64 +1,99 @@
 <div id="settings-option-container">
     <h1>Options</h1>
-    <form>
-        <div id="preferences-container">
+    <form [formGroup]="settingsForm" (ngSubmit)="applySettings()">
+        <div formGroupName="notificationPreferences" id="preferences-container">
             <h2 class="settings-header" >User preferences</h2>
             <div id="preference-settings-container">
                 <div class="preference-setting-container">
-                    <input class="preference-input" id="timerIndicatorOption" type="checkbox">
+                    <input 
+                    class="preference-input" 
+                    id="timerIndicatorOption" 
+                    type="checkbox" 
+                    formControlName="timerIndication"
+                    >
                     <label for="timerIndicatorOption">Timer indication in browser tab?</label>
                 </div>
                 <div class="preference-setting-container">
-                    <input class="preference-input" id="browserNotificationOption" type="checkbox">
+                    <input 
+                    class="preference-input" 
+                    id="browserNotificationOption" 
+                    type="checkbox" 
+                    formControlName="browserNotification">
                     <label for="browserNotificationOption">Browser notifications?</label>
                 </div>
                 <div class="preference-setting-container">
-                    <input class="preference-input" id="autoStartTimersOption" type="checkbox">
+                    <input 
+                    class="preference-input" 
+                    id="autoStartTimersOption" 
+                    type="checkbox" 
+                    formControlName="autoStartTimer">
                     <label for="autoStartTimersOption">Auto start pomodoros and breaks?</label>
                 </div>
             </div>
         </div>
-        <div id="alert-option-container">
+        <div id="alert-option-container" formGroupName="alertPreferences">
             <h2 class="settings-header" >Select Sound</h2>
-            <select id="alertOption" size="5">
-                <option value="beep">Beep</option>
-                <option value="beep">Test</option>
-                <option value="beep">Test</option>
-                <option value="beep">Test</option>
-                <option value="beep">Test</option>
+            <select id="alertOption" size="5" formControlName="soundOptions">
+                <option 
+                *ngFor="let name of getAudioFiles()" 
+                [ngValue]="name"
+                >
+                {{name}}</option>
             </select>
         </div>
-        <div id="volume-option-container">
+        <div id="volume-option-container" formGroupName="volumePreferences">
             <h2 class="settings-header" >Select Volume</h2>
-            <select id="volumeOption" size="5">
-                <option value="mute">mute</option>
-                <option value="twentyFivePercent">25%</option>
-                <option value="fiftyPercent">50%</option>
-                <option value="seventyFivePercent">75%</option>
-                <option value="fullVolume">100%</option>
+            <select id="volumeOption" size="5" formControlName="volumeOptions">
+                <option value="0">mute</option>
+                <option value=".25">25%</option>
+                <option value=".5">50%</option>
+                <option value=".75">75%</option>
+                <option value="1">100%</option>
             </select>
         </div>
-        <div id="timer-settings-container">
+        <div id="timer-settings-container" formGroupName="timerPreferences">
             <h2 class="settings-header">Set Custom Times (in minutes)</h2>
             <div id="timer-settings-inner-container">
                 <div class="timerSettings">
                     <label class="timer-setting-labels" for="pomodroTimerSettings">Pomodoro</label>
-                    <input name="pomodoroSet" class="timer-setting" id="pomodoroTimerSettings" type="number" step="1" min="1" (click)="logTimePeriods()" [(ngModel)]="getTimePeriods().pomodoro" [ngModelOptions]="{standalone: true}"/>
+                    <input 
+                    name="pomodoroSet" 
+                    class="timer-setting" 
+                    id="pomodoroTimerSettings" 
+                    type="number" 
+                    step="1" 
+                    min="1" 
+                    formControlName="pomodoroSetting"
+                    />
                 </div>
                 <div class="timerSettings">
                     <label class="timer-setting-labels" for="shortBreakSettings">Short Break</label>
-                    <input class="timer-setting" id="shortBreakSettings" type="number" step="1" min="1" [(ngModel)]="getTimePeriods().shortBreak" [ngModelOptions]="{standalone: true}">
+                    <input 
+                    class="timer-setting" 
+                    id="shortBreakSettings" 
+                    type="number" 
+                    step="1" 
+                    min="1" 
+                    formControlName="shortBreakSetting"
+                    />
                 </div>
                 <div class="timerSettings">
                     <label class="timer-setting-labels" for="longBreakSettings">Long Break</label>
-                    <input class="timer-setting" id="longBreakSettings" type="number" step="1" min="1" [(ngModel)]="getTimePeriods().longBreak" [ngModelOptions]="{standalone: true}">
+                    <input 
+                    class="timer-setting" 
+                    id="longBreakSettings" 
+                    type="number" 
+                    step="1" 
+                    min="1" 
+                    formControlName="longBreakSetting"
+                    />
                 </div>
             </div>
         </div>
-        <div id="save-settings-container">
-            <button class="settings-button">Save</button>
+        <div id="settings-button-container">
+            <button class="settings-button" type="submit">Save</button>
             <button class="settings-button">Reset</button>
-            <button class="settings-button">Sound Test</button>
+            <button class="settings-button" (click)="playAudioFileSelected()">Sound Test</button>
         </div>
     </form>
 </div>
