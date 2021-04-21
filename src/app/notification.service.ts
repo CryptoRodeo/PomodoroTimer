@@ -16,8 +16,9 @@ export class NotificationService {
 
 
   private audioSettings = {
-    duration: 4.5
-  }
+    duration: 4.5,
+    volume: .5
+  };
   
   private notificationIcon = '../assets/tomato.png';
 
@@ -71,12 +72,17 @@ export class NotificationService {
     if (AudioContext) {
       let selectedAudioTone = this.getSelectedAudioTone();
       const selectedTone = new Audio(selectedAudioTone["file"]);
-      this.limitAudioDuration(selectedTone);
+      this.applyAudioSettings(selectedTone);
       selectedTone.play();
       return;
     }
     alert("Sorry, but the Web Audio API is not supported by your browser. Please, consider upgrading to the latest version or downloading Google Chrome or Mozilla Firefox");
     return;
+  }
+
+  applyAudioSettings(audio: Object): void {
+    this.limitAudioDuration(audio);
+    this.limitAudioVolume(audio);
   }
 
   limitAudioDuration(audio): void {
@@ -85,5 +91,13 @@ export class NotificationService {
         audio.pause();
       }
     });
+  }
+
+  limitAudioVolume(audio: Object): void {
+    audio["volume"] = this.audioSettings.volume;
+  }
+
+  setAudioVolume(volume: number = this.audioSettings.volume): void {
+    this.audioSettings.volume = volume;
   }
 }
