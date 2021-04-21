@@ -79,7 +79,9 @@ export class SettingsComponent implements OnInit {
 
   saveAlertTonePreference(settingChanges: Object): void {
     let alertChanges = this.extractControls(settingChanges);
-    console.log(alertChanges);
+    let toneSelected = alertChanges["soundOptions"].value;
+    if (typeof toneSelected == 'object') { return; }
+    this.notificationService.setSelectedAudioTone(toneSelected);
   }
 
   saveNotificationPreferences(settingChanges: Object): void {
