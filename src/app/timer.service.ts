@@ -33,8 +33,7 @@ export class TimerService {
   constructor(private notificationService: NotificationService, private permissionService: PermissionService) 
   {
     this.TimeManager.countDownValue = this.convertToSeconds(this.getTimePeriodSelected());
-     // Set the auto start timer permission
-    this.permissionService.setPermissions({ autoStartTimer: false });
+    // this.permissionService.setPermissions({ autoStartTimer: false });
   }
 
   convertToSeconds = (minutes: number): number => {
@@ -56,10 +55,11 @@ export class TimerService {
 
   autoStartTimers(): boolean {
     if (!this.getPermissions().hasOwnProperty("autoStartTimer")) {
-      console.log('autoStartTimer is not a permission set');
+      console.error('autoStartTimer is not a permission set');
       return false;
     }
-    return this.getPermissions()["autoStartTimer"];
+    let perms = this.getPermissions();
+    return perms["autoStartTimer"];
   }
 
   getPomodoroTimeValue(): number {
@@ -200,6 +200,10 @@ export class TimerService {
     }
     this.notifyUser();
     this.resetTimer();
+    if (this.autoStartTimers()) {
+      this.setShortBreak();
+      this.startTimer();
+    }
   }
 
   stopTimer(): void
