@@ -39,7 +39,21 @@ export class NotificationService {
     }
   }
 
-  setSelectedAudioTone():void {
+  unSetAudioToneSelection(): void {
+    for (const [audio, props] of Object.entries(this.audioFiles)) { 
+      props.selected = false; 
+    }
+  }
+
+  setSelectedAudioTone(audioTone: string):void {
+    //Check if this audioTone exists in the audioFiles object.
+    if (! (audioTone in this.audioFiles) ) {
+      console.error('Invalid audio tone set');
+      return;
+    }
+    this.unSetAudioToneSelection();
+    this.audioFiles[audioTone].selected = true;
+    console.log(this.audioFiles);
   }
 
   getAudioDuration(): number {
