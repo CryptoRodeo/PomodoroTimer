@@ -7,7 +7,8 @@ export class PermissionService {
 
   private base_permissions = {
     browserTabNotification: true,
-    browserNotifications: ( Notification.permission === 'granted' ) 
+    browserNotifications: ( Notification.permission === 'granted' ),
+    autoStartTimer: false
   }
 
   constructor() { }
