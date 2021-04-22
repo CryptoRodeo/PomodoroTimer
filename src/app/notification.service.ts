@@ -53,7 +53,6 @@ export class NotificationService {
     }
     this.unSetAudioToneSelection();
     this.audioFiles[audioTone].selected = true;
-    console.log(this.audioFiles);
   }
 
   getAudioDuration(): number {
