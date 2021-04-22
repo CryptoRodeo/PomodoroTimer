@@ -89,8 +89,8 @@ export class SettingsComponent implements OnInit {
 
     let notificationPreferences = {
       autoStartTimer: notificationChanges["autoStartTimer"].value,
-      browserNotification: notificationChanges["browserNotification"].value,
-      timerIndication: notificationChanges["timerIndication"].value,
+      browserNotifications: notificationChanges["browserNotification"].value,
+      browserTabNotification: notificationChanges["timerIndication"].value,
     }
     this.permissionService.setPermissions(notificationPreferences);
   }
