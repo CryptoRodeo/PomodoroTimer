@@ -16,6 +16,7 @@ export class TimerService {
     shortBreak: 5,
     longBreak: 10
   }
+
   private TimeManager = {
     pomodoro: 30,
     shortBreak: 5,
@@ -25,7 +26,6 @@ export class TimerService {
     timeFormatted: null
   }
 
-  private tabIndicatorAllowed = true;
   private timerStarted = false;
   private title = document.querySelector('title');
   private timerIntervalID = null;
