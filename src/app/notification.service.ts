@@ -6,13 +6,33 @@ import { PermissionService } from './permission.service';
 })
 export class NotificationService {
 
-  private audioFiles = {
-    beep: { file: '../assets/audio/alarm_beeps.mp3', selected: true } ,
-    retro: { file: '../assets/audio/alarm_beeps.mp3', selected: false },
-    nuclear: { file: '../assets/audio/alarm_beeps.mp3', selected: false },
-    dog: { file: '../assets/audio/alarm_beeps.mp3', selected: false },
-    modern: { file: '../assets/audio/alarm_beeps.mp3', selected: false }
-  };
+  private audioFiles = [
+    { 
+      name: 'beep',
+      file: '../assets/audio/alarm_beeps.mp3', 
+      selected: true 
+    } ,
+    { 
+      name: 'retro',
+      file: '../assets/audio/alarm_beeps.mp3', 
+      selected: false 
+    },
+    { 
+      name: 'nuclear',
+      file: '../assets/audio/alarm_beeps.mp3', 
+      selected: false 
+    },
+    { 
+      name: 'dog',
+      file: '../assets/audio/alarm_beeps.mp3', 
+      selected: false 
+    },
+    { 
+      name: 'modern',
+      file: '../assets/audio/alarm_beeps.mp3', 
+      selected: false 
+    }
+  ];
 
 
   private audioSettings = {
