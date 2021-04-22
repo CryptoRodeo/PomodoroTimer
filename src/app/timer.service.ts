@@ -152,7 +152,7 @@ export class TimerService {
 
 
   browserTabIndicationAllowed(): Boolean {
-    return this.tabIndicatorAllowed;
+    return this.permissionService.browserTabNotificationsAllowed();
   }
 
   startTimer(): void
