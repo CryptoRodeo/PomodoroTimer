@@ -17,11 +17,8 @@ export class PermissionService {
     return this.base_permissions.browserTabNotification;
   }
 
-  browserNotificationsAllowed(): Boolean {
-    if (!this.base_permissions.browserNotifications) {
-      return this.requestPermissionForBrowserNotifications();
-    }
-    return this.base_permissions.browserNotifications;
+  browserNotificationsAllowed(): boolean {
+    return this.base_permissions.browserNotifications ||= this.requestPermissionForBrowserNotifications();
   }
 
   getPermissions(): object {
@@ -32,7 +29,7 @@ export class PermissionService {
     Object.assign(this.base_permissions, new_perms);
   }
 
-  requestPermissionForBrowserNotifications(): Boolean {
+  requestPermissionForBrowserNotifications(): boolean {
     if (!window.Notification) {
       alert('This browser does not support desktop notifications.');
       return;
@@ -43,8 +40,7 @@ export class PermissionService {
     }
     // request permission from user
     Notification.requestPermission().then((permission) => {
-      if (permission === 'granted') { return true; } 
-      return false;
+      return permission === 'granted';
     }).catch((err) => {
         console.error(err);
     });
