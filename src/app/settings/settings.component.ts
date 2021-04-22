@@ -40,8 +40,8 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getAudioFiles(): Array<String> {
-    return Object.getOwnPropertyNames(this.notificationService.getAudioFiles());
+  getAudioFiles(): Object {
+    return this.notificationService.getAudioFiles();
   }
 
   getBrowserNotificationPermission(): Boolean {
