@@ -16,7 +16,7 @@ export class SettingsComponent implements OnInit {
       soundOptions: new FormControl(this.getAudioFiles())
     }),
     volumePreferences: new FormGroup({
-      volumeOptions: new FormControl({})
+      volumeOptions: new FormControl(this.getAudioVolumeOptions())
     }),
     notificationPreferences: new FormGroup({
       timerIndication: new FormControl(this.getBrowserTabPermission()),
@@ -42,6 +42,10 @@ export class SettingsComponent implements OnInit {
 
   getAudioFiles(): Object {
     return this.notificationService.getAudioFiles();
+  }
+
+  getAudioVolumeOptions(): Object {
+    return this.notificationService.getVolumeOptions();
   }
 
   getBrowserNotificationPermission(): Boolean {
