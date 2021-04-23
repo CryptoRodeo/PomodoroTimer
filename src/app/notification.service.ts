@@ -37,7 +37,28 @@ export class NotificationService {
 
   private audioSettings = {
     duration: 4.5,
-    volume: .5
+    volumeOptions: [
+      {
+        volume: 0,
+        selected: false
+      },
+      {
+        volume: 0.25,
+        selected: false
+      },
+      {
+        volume: 0.5,
+        selected: false
+      },
+      {
+        volume: 0.75,
+        selected: false
+      },
+      {
+        volume: 1,
+        selected: true 
+      }
+    ]
   };
   
   private notificationIcon = '../assets/tomato.png';
@@ -96,6 +117,10 @@ export class NotificationService {
     });
   }
 
+  getSelectedAudioFile(): HTMLAudioElement {
+    return new Audio(this.getSelectedAudioTone["file"]);
+  }
+
   playAlert(): void {
     // Check if AudioContext is available in the browser API
     var AudioContext = window["AudioContext"]
@@ -103,10 +128,7 @@ export class NotificationService {
     || false;
 
     if (AudioContext) {
-      let selectedAudioTone = this.getSelectedAudioTone();
-      const selectedTone = new Audio(selectedAudioTone["file"]);
-      this.applyAudioSettings(selectedTone);
-      selectedTone.play();
+      this.getSelectedAudioFile().play();
       return;
     }
     alert("Sorry, but the Web Audio API is not supported by your browser. Please, consider upgrading to the latest version or downloading Google Chrome or Mozilla Firefox");
@@ -126,11 +148,39 @@ export class NotificationService {
     });
   }
 
-  limitAudioVolume(audio: Object): void {
-    audio["volume"] = this.audioSettings.volume;
+  getVolumeOptions(): Array<{volume:number, selected:boolean}> {
+    return this.audioSettings.volumeOptions;
   }
 
-  setAudioVolume(volume: number = this.audioSettings.volume): void {
-    this.audioSettings.volume = volume;
+  resetVolumeOptions(): void {
+    this.getVolumeOptions().forEach((vol) => vol["selected"] = false);
+  }
+
+  getSelectedAudioVolume(): Object {
+    return this.audioSettings.volumeOptions.filter(vol => vol.selected)[0];
+  }
+
+  limitAudioVolume(audio: Object): void {
+    audio["volume"] = this.getSelectedAudioVolume();
+  }
+
+  /**
+   * rework to use selected audio volume option object 
+   */
+  setAudioVolume(volume: number = null): void {
+    if ( volume == null) { return }
+    this.resetVolumeOptions();
+    let newVolumeSettings: Array<{volume: number, selected: boolean}> = 
+    this.getVolumeOptions()
+    .map((volumeOption) => 
+    { 
+      volumeOption["volume"] == volume ? volumeOption["selected"] = true : volumeOption["selected"] = false
+      return volumeOption;
+    });
+    this.updateAudioVolumeSettings(newVolumeSettings);
+  }
+
+  private updateAudioVolumeSettings(newVolumeSettings: Array<{volume: number, selected: boolean}>): void {
+    this.audioSettings["volume"] = newVolumeSettings;
   }
 }
