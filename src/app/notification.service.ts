@@ -72,6 +72,10 @@ export class NotificationService {
     return this.audioFiles;
   }
 
+  getAudioFileNames(): Array<string> {
+    return this.audioFiles.map(af => af.name);
+  }
+
   getSelectedAudioTone(): object {
     for (const [audio, props] of Object.entries(this.audioFiles)) {
       if ( props.selected == true ) {
@@ -81,19 +85,23 @@ export class NotificationService {
   }
 
   unSetAudioToneSelection(): void {
-    for (const [audio, props] of Object.entries(this.audioFiles)) { 
-      props.selected = false; 
+    for (const audio of this.audioFiles) { 
+      audio.selected = false; 
     }
+  }
+
+  getAudioFile(_name: string) {
+    return this.audioFiles.find(af => af["name"] == _name);
   }
 
   setSelectedAudioTone(audioTone: string):void {
     //Check if this audioTone exists in the audioFiles object.
-    if (! (audioTone in this.audioFiles) ) {
+    if (!(this.getAudioFileNames().includes(audioTone)) ) {
       console.error('Invalid audio tone set');
       return;
     }
     this.unSetAudioToneSelection();
-    this.audioFiles[audioTone].selected = true;
+    this.getAudioFile(audioTone).selected = true;
   }
 
   getAudioDuration(): number {
@@ -128,6 +136,9 @@ export class NotificationService {
     || false;
 
     if (AudioContext) {
+      console.log("selected audio file");
+      console.log(this.getSelectedAudioFile());
+      console.log("-------------------");
       this.getSelectedAudioFile().play();
       return;
     }
@@ -157,16 +168,13 @@ export class NotificationService {
   }
 
   getSelectedAudioVolume(): Object {
-    return this.audioSettings.volumeOptions.filter(vol => vol.selected)[0];
+    return this.getVolumeOptions().filter(vol => vol.selected)[0];
   }
 
   limitAudioVolume(audio: Object): void {
     audio["volume"] = this.getSelectedAudioVolume();
   }
 
-  /**
-   * rework to use selected audio volume option object 
-   */
   setAudioVolume(volume: number = null): void {
     if ( volume == null) { return }
     this.resetVolumeOptions();
