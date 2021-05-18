@@ -36,7 +36,7 @@ export class NotificationService {
 
 
   private audioSettings = {
-    duration: 4.5,
+    duration: 2.5,
     volumeOptions: [
       {
         volume: 0,
@@ -77,11 +77,9 @@ export class NotificationService {
   }
 
   getSelectedAudioTone(): object {
-    for (const [audio, props] of Object.entries(this.audioFiles)) {
-      if ( props.selected == true ) {
-        return props;
-      }
-    }
+    console.log('i was called');
+    console.log(this.audioFiles.find(af => af.selected == true));
+    return this.audioFiles.find(af => af.selected == true);
   }
 
   unSetAudioToneSelection(): void {
@@ -126,7 +124,8 @@ export class NotificationService {
   }
 
   getSelectedAudioFile(): HTMLAudioElement {
-    return new Audio(this.getSelectedAudioTone["file"]);
+    let audioFileSelected = this.getSelectedAudioTone();
+    return new Audio(audioFileSelected["file"]);
   }
 
   playAlert(): void {
@@ -136,14 +135,15 @@ export class NotificationService {
     || false;
 
     if (AudioContext) {
-      console.log("selected audio file");
-      console.log(this.getSelectedAudioFile());
-      console.log("-------------------");
       this.getSelectedAudioFile().play();
       return;
     }
     alert("Sorry, but the Web Audio API is not supported by your browser. Please, consider upgrading to the latest version or downloading Google Chrome or Mozilla Firefox");
     return;
+  }
+
+  sampleAlert(): void {
+
   }
 
   applyAudioSettings(audio: Object): void {
