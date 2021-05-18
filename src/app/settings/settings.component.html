@@ -36,7 +36,7 @@
             <select id="alertOption" size="5" formControlName="soundOptions">
                 <option 
                 *ngFor="let audioFile of getAudioFiles()" 
-                [attr.value]="audioFile"
+                [attr.value]="audioFile.name"
                 [attr.selected]="audioFile.selected===true || null"
                 >
                 {{audioFile.name}}</option>
