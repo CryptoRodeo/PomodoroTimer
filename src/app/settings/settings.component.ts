@@ -40,6 +40,10 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  settingValueUntouched(formControlSetting): boolean {
+    return formControlSetting["pristine"] == true;
+  }
+
   getAudioFiles(): Object {
     return this.notificationService.getAudioFiles();
   }
@@ -85,10 +89,8 @@ export class SettingsComponent implements OnInit {
     let alertChanges = this.extractControls(settingChanges);
     let toneSelected = alertChanges["soundOptions"].value;
 
-    if (typeof toneSelected == 'object') { 
-      console.log("Something wrong");  
-      return; 
-    }
+    // No tone selected
+    if (this.settingValueUntouched(alertChanges["soundOptions"])) { return; }
     this.notificationService.setSelectedAudioTone(toneSelected);
   }
 
@@ -123,7 +125,7 @@ export class SettingsComponent implements OnInit {
     let volumeChanges = this.extractControls(settingChanges);
     let volumeSelected = volumeChanges["volumeOptions"].value;
     //Check for whether a volume preference was selected
-    if (typeof volumeSelected == 'object') { return; }
+    if (this.settingValueUntouched(volumeChanges["volumeOptions"])) { return; }
     this.notificationService.setAudioVolume(volumeSelected);
   }
 
