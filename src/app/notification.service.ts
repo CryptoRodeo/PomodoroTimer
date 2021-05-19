@@ -9,27 +9,27 @@ export class NotificationService {
   private audioFiles = [
     { 
       name: 'beep',
-      file: '../assets/audio/alarm_beeps.mp3', 
+      file: '../assets/audio/beep.mp3', 
       selected: true 
     } ,
     { 
       name: 'retro',
-      file: '../assets/audio/alarm_beeps.mp3', 
+      file: '../assets/audio/retro.mp3', 
       selected: false 
     },
     { 
       name: 'nuclear',
-      file: '../assets/audio/alarm_beeps.mp3', 
+      file: '../assets/audio/nuclear.mp3', 
       selected: false 
     },
     { 
       name: 'dog',
-      file: '../assets/audio/alarm_beeps.mp3', 
+      file: '../assets/audio/dog.mp3', 
       selected: false 
     },
     { 
       name: 'modern',
-      file: '../assets/audio/alarm_beeps.mp3', 
+      file: '../assets/audio/modern.mp3', 
       selected: false 
     }
   ];
@@ -77,8 +77,6 @@ export class NotificationService {
   }
 
   getSelectedAudioTone(): object {
-    console.log('i was called');
-    console.log(this.audioFiles.find(af => af.selected == true));
     return this.audioFiles.find(af => af.selected == true);
   }
 
@@ -135,7 +133,9 @@ export class NotificationService {
     || false;
 
     if (AudioContext) {
-      this.getSelectedAudioFile().play();
+      let audioTone = this.getSelectedAudioFile();
+      this.applyAudioSettings(audioTone);
+      audioTone.play();
       return;
     }
     alert("Sorry, but the Web Audio API is not supported by your browser. Please, consider upgrading to the latest version or downloading Google Chrome or Mozilla Firefox");
@@ -168,19 +168,20 @@ export class NotificationService {
   }
 
   getSelectedAudioVolume(): Object {
-    return this.getVolumeOptions().filter(vol => vol.selected)[0];
+    let selectedAudioVolume = this.getVolumeOptions().find(vol => vol.selected);
+    return selectedAudioVolume;
+
   }
 
   limitAudioVolume(audio: Object): void {
-    audio["volume"] = this.getSelectedAudioVolume();
+    audio["volume"] = this.getSelectedAudioVolume()["volume"];
   }
 
   setAudioVolume(volume: number = null): void {
     if ( volume == null) { return }
     this.resetVolumeOptions();
     let newVolumeSettings: Array<{volume: number, selected: boolean}> = 
-    this.getVolumeOptions()
-    .map((volumeOption) => 
+    this.getVolumeOptions().map((volumeOption) => 
     { 
       volumeOption["volume"] == volume ? volumeOption["selected"] = true : volumeOption["selected"] = false
       return volumeOption;
