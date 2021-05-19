@@ -1,17 +1,10 @@
 TODO:
-- Finish up the settings component so the changes are applied
-  to the individual things they're linked to.
-
-  - Make the reset button actually work
-
-  - Fix the issue where if a user doesn't save the settings, the setting values
+- add functionality to sample a notification alert.
+- add dark mode
+- make the app more responsive and mobile friendly
+- Fix the issue where if a user doesn't save the settings, the setting values
     return back to their default values
-
 - Add close button to the settings component so it closes the modal
-
-- Refactor the timer service so its easier to work with and modify
-
 - Add more audio files
-
 - Add auto start timer functionality to TimerService:
   - go from pomo to short break
