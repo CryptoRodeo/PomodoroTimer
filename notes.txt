@@ -1,10 +1,6 @@
 TODO:
-- add functionality to sample a notification alert.
 - add dark mode
 - make the app more responsive and mobile friendly
-- Fix the issue where if a user doesn't save the settings, the setting values
-    return back to their default values
 - Add close button to the settings component so it closes the modal
-- Add more audio files
 - Add auto start timer functionality to TimerService:
   - go from pomo to short break
