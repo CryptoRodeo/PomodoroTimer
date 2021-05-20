@@ -5,6 +5,14 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+
+  --dark-bg-start-btn-bg-color: #00695C;
+  --dark-bg-stop-btn-bg-color: #B71C1C;
+  --dark-bg-reset-btn-bg-color: #0D47A1;
+
+  --dark-bg-start-btn-hover-bg-color: #018171;
+  --dark-bg-stop-btn-hover-bg-color: #C41F1F;
+  --dark-bg-reset-btn-hover-bg-color: #1150B2;
 }
 
 div#controlContainer
@@ -69,4 +77,41 @@ button.controlBtn:nth-child(3):hover
 button.controlBtn:focus {
   outline-style:dotted;
   border-radius: 20px;
+}
+
+@media (prefers-color-scheme: dark) {
+
+  button.controlBtn {
+    color: var(--dark-bg-text-color);
+  }
+
+  button.controlBtn:nth-child(1)
+  {
+    background-color: var(--dark-bg-start-btn-bg-color);
+  }
+
+  button.controlBtn:nth-child(1):hover 
+  {
+    background-color: var(--dark-bg-start-btn-hover-bg-color);
+  }
+
+  button.controlBtn:nth-child(2)
+  {
+    background-color: var(--dark-bg-stop-btn-bg-color);
+  }
+
+  button.controlBtn:nth-child(2):hover
+  {
+    background-color: var(--dark-bg-stop-btn-hover-bg-color);
+  }
+
+  button.controlBtn:nth-child(3)
+  {
+    background-color: var(--dark-bg-reset-btn-bg-color);
+  }
+
+  button.controlBtn:nth-child(3):hover
+  {
+    background-color: var(--dark-bg-reset-btn-hover-bg-color);
+  }
 }

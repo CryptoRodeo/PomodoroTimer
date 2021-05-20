@@ -1,3 +1,7 @@
+:host {
+  --dark-settings-btn-bg-color: #512da8;
+}
+
 div#settings-option-container {
   background-color: #FFF;
   width: 40.625rem;
@@ -66,4 +70,26 @@ button.settings-button:hover {
   background-color: #00B0FF;
   cursor: pointer;
   transition: linear .2s;
+}
+
+@media (prefers-color-scheme: dark) {
+  div#settings-option-container {
+    background-color: var(--dark-bg-color);
+    color: var(--dark-bg-text-color);
+  }
+
+  button.settings-button {
+    background-color: var(--dark-settings-btn-bg-color);
+    color: var(--dark-bg-text-color);
+  }
+
+  select#alertOption, select#volumeOption {
+    background-color: #262626;
+    color: var(--dark-bg-text-color);
+  }
+
+  div.timerSettings input {
+    background-color: var(--dark-bg-color);
+    color: var(--dark-bg-text-color);
+  }
 }

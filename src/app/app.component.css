@@ -1,6 +1,8 @@
 :host {
   height: 100vh;
   width: 100vw;
+  --dark-bg-button-settings-btn-color: #37474F;
+  --dark-bg-button-settings-btn-hover-color: #3F535D;
 }
 
 header
@@ -26,7 +28,7 @@ button#settingsBtn
 }
 
 
-button#settingsBtn:hover
+button#settingsbtn:hover
 {
   background-color: #424242;
   transition: linear .2s;
@@ -40,4 +42,20 @@ main#container
   height: inherit;
   flex-direction: column;
   align-items: center;
+}
+
+@media (prefers-color-scheme: dark) {
+  button#settingsBtn {
+    color: var(--dark-bg-text-color);
+    background-color: var(--dark-bg-button-settings-btn-color);
+  }
+  
+  button#settingsBtn:hover
+  {
+    background-color: var(--dark-bg-button-settings-btn-hover-color);
+    transition: linear .2s;
+    cursor: pointer;
+  }
+
+
 }
