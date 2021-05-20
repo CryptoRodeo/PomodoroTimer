@@ -54,7 +54,7 @@ export class TimerService {
   }
 
   autoStartTimers(): boolean {
-    if (!this.getPermissions().hasOwnProperty("autoStartTimer")) {
+    if (!this.permissionService.hasPermission("autoStartTimer")) {
       console.error('autoStartTimer is not a permission set');
       return false;
     }
