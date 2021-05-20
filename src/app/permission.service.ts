@@ -25,6 +25,10 @@ export class PermissionService {
     return this.base_permissions;
   }
 
+  hasPermission(perm: string): boolean {
+    return this.base_permissions.hasOwnProperty(perm);
+  }
+
   setPermissions(new_perms: object) {
     Object.assign(this.base_permissions, new_perms);
   }
