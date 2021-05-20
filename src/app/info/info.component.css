@@ -3,6 +3,10 @@
     width: 100%;
     min-width: 100%;
     margin-top: 3rem;
+
+    --dark-bg-info-container-color: #1B1B1B;
+    --dark-bg-shortcut-strong-color:#00695c;
+    --dark-bg-alert-permission-btn-bg-color: #512da8;
 }
 
 div#info-container {
@@ -57,4 +61,21 @@ button#alert-permission-button {
 
 button#alert-permission-button:hover {
    cursor: pointer; 
+}
+
+@media (prefers-color-scheme: dark) {
+
+    div.info-box-container {
+        background-color: var(--dark-bg-info-container-color);
+        color: var(--dark-bg-text-color);
+    }
+
+    ul#shortcut-list strong{
+        color: var(--dark-bg-shortcut-strong-color);
+    }
+    
+    button#alert-permission-button {
+        background-color: var(--dark-bg-alert-permission-btn-bg-color);
+        color: var(--dark-bg-text-color);
+    }
 }

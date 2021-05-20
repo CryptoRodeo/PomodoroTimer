@@ -4,6 +4,8 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  --dark-mode-taskbar-bg-color: #512DA8;
+  --dark-mode-taskbar-hover-bg-color: #683CD2 ;
 }
 
 nav#taskBar
@@ -49,4 +51,20 @@ nav#taskBar button.taskBtn:hover {
   background-color: #00B0FF;
   cursor: pointer;
   transition: linear .2s;
+}
+
+@media (prefers-color-scheme: dark) {
+  nav#taskBar {
+    background-color: var(--dark-mode-taskbar-bg-color);
+  }
+
+  nav#taskBar button.taskBtn {
+    color: var(--dark-bg-text-color);
+  }
+
+  nav#taskBar button.taskBtn:hover {
+    background-color: var(--dark-mode-taskbar-hover-bg-color);
+    cursor: pointer;
+    transition: linear .2s;
+  }
 }
