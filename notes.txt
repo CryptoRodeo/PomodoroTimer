@@ -1,6 +1,3 @@
 TODO:
-- add dark mode
 - make the app more responsive and mobile friendly
 - Add close button to the settings component so it closes the modal
-- Add auto start timer functionality to TimerService:
-  - go from pomo to short break
